@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-export default function Sidebar() {
+import { toPng } from "html-to-image";
+export default function Sidebar({ canvasRef }) {
   const onDragStart = (event, nodeData) => {
     event.dataTransfer.setData("application/reactflow", nodeData);
     event.dataTransfer.effectAllowed = "move";
@@ -14,6 +14,23 @@ export default function Sidebar() {
     e.preventDefault();
     setDetail(temp);
     setTemp("");
+  };
+  const onSaveImage = () => {
+    if (canvasRef.current === null) {
+      console.log("null");
+      return;
+    }
+    console.log("listening");
+    toPng(canvasRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "my-Roadmap.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className='mx-4 min-h-full'>
@@ -49,11 +66,22 @@ export default function Sidebar() {
           />
         </div>
         <div className='flex justify-end my-2'>
-          <button className='border-2 border-black px-4 py-1 rounded-md text-white font-medium bg-black flex justify-end'>
+          <button
+            type='submit'
+            className='border-2 border-black px-4 py-1 rounded-md text-white font-medium bg-black flex justify-end'
+          >
             Add
           </button>
         </div>
       </form>
+      <footer className='flex justify-end'>
+        <button
+          className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
+          onClick={onSaveImage}
+        >
+          Download
+        </button>
+      </footer>
     </div>
   );
 }

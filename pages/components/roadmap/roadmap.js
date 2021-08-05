@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { toPng } from "html-to-image";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -58,6 +59,8 @@ const DnDFlow = () => {
 
     setElements((es) => es.concat(newNode));
   };
+  ////////////////////////HTML to canvas//////////////////////
+  const canvasRef = useRef(null);
 
   return (
     <div className='grid grid-cols-4'>
@@ -73,12 +76,14 @@ const DnDFlow = () => {
             onLoad={onLoad}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            ref={canvasRef}
           >
             <Controls />
           </ReactFlow>
         </div>
+
         <div>
-          <Sidebar />
+          <Sidebar canvasRef={canvasRef} />
         </div>
       </ReactFlowProvider>
     </div>
