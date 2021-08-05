@@ -6,7 +6,7 @@ import ReactFlow, {
   Controls,
 } from "react-flow-renderer";
 
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar";
 
 const initialElements = [
   {
@@ -41,25 +41,26 @@ const DnDFlow = () => {
 
   const onDrop = (event) => {
     event.preventDefault();
-
+    console.log(event.dataTransfer);
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    const type = event.dataTransfer.getData("application/reactflow");
+    const data = event.dataTransfer.getData("application/reactflow");
+    console.log(data);
     const position = reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     });
     const newNode = {
       id: getId(),
-      type,
+      type: "default",
       position,
-      data: { label: `${type} node` },
+      data: { label: `${data}` },
     };
 
     setElements((es) => es.concat(newNode));
   };
 
   return (
-    <div className='grid grid-cols-4 gap-4'>
+    <div className='grid grid-cols-4'>
       <ReactFlowProvider>
         <div
           className='reactflow-wrapper bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'
@@ -76,7 +77,9 @@ const DnDFlow = () => {
             <Controls />
           </ReactFlow>
         </div>
-        <Sidebar />
+        <div>
+          <Sidebar />
+        </div>
       </ReactFlowProvider>
     </div>
   );

@@ -1,34 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Sidebar = () => {
-  const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
+export default function Sidebar() {
+  const onDragStart = (event, nodeData) => {
+    event.dataTransfer.setData("application/reactflow", nodeData);
     event.dataTransfer.effectAllowed = "move";
   };
-
+  const [detail, setDetail] = useState("Drag Me");
+  const [temp, setTemp] = useState("");
+  const handleOnChange = (e) => {
+    setTemp(e.target.value);
+  };
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    setDetail(temp);
+    setTemp("");
+  };
   return (
-    <aside>
-      <div className='description'>
-        You can drag these nodes to the pane on the right. Type something to add
+    <div className='mx-4 min-h-full'>
+      <div className='description font-bold text-xl mb-2 pt-2'>
+        You can drag the nodes to the pane on the right.
       </div>
-      <div
-        className='dndnode'
-        onDragStart={(event) => onDragStart(event, "default")}
-        draggable
-      >
-        Default Node
+      <div className='bg-gray-100 cursor-pointer py-10 flex justify-center border-2 border-gray-200 '>
+        <div
+          className='border-2 border-black p-4 my-10 w-36 text-md  flex aling-center justify-center font-medium rounded-md'
+          onDragStart={(event) => {
+            onDragStart(event, detail);
+            setDetail("Drag me");
+          }}
+          draggable
+        >
+          {detail}
+        </div>
       </div>
-      <div className='input'>
-        <label htmlFor='input'>Add description</label>
-        <input type='text' name='node' value=' ' placeholder='Type something' />
-      </div>
-    </aside>
+      <form action='submit' onSubmit={handleOnSubmit}>
+        <div className='input'>
+          <div className='my-2'>
+            <label htmlFor='input' className='font-medium '>
+              Add description
+            </label>
+          </div>
+          <input
+            className='border-2 border-gray-400 rounded-lg  w-full p-2 '
+            type='text'
+            name='node'
+            placeholder='Type something'
+            value={temp}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className='flex justify-end my-2'>
+          <button className='border-2 border-black px-4 py-1 rounded-md text-white font-medium bg-black flex justify-end'>
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
   );
-};
-export default Sidebar;
+}
 
-{
-  /* <div className='grid grid-cols-4 gap-4'>
+/* <div className='grid grid-cols-4 gap-4'>
       <div className='bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'>
         <ReactFlow elements={initialElements} onLoad={onLoad}>
           <Controls />
@@ -36,4 +66,3 @@ export default Sidebar;
       </div>
       <div>This is new div</div>
     </div> */
-}
