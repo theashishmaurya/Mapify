@@ -1,55 +1,85 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import ReactFlow, {
-  Controls,
   ReactFlowProvider,
   addEdge,
   removeElements,
+  Controls,
 } from "react-flow-renderer";
-export default function Roadmap() {
-  // const { user, error, isLoading } = useUser();
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) return <div>{error.message}</div>;
 
-  const initialElements = [
-    {
-      id: "1",
-      type: "input", // input node
-      data: { label: "Input Node" },
-      position: { x: 250, y: 25 },
-    },
-    // default node
-    {
-      id: "2",
-      // you can also pass a React component as a label
-      data: { label: <div>Default Node</div> },
-      position: { x: 100, y: 125 },
-    },
-    {
-      id: "3",
-      type: "output", // output node
-      data: { label: "Output Node" },
-      position: { x: 250, y: 250 },
-    },
-    // animated edge
-    { id: "e1-2", source: "1", target: "2" },
-    { id: "e2-3", source: "2", target: "3" },
-  ];
-  const onLoad = (reactFlowInstance) => {
-    console.log("flow loaded:", reactFlowInstance);
-    reactFlowInstance.fitView();
-  };
+import Sidebar from "./Sidebar";
+
+const initialElements = [
+  {
+    id: "1",
+    type: "default",
+    data: { label: "input node" },
+    position: { x: 250, y: 5 },
+  },
+];
+
+let id = 0;
+const getId = () => `dndnode_${id++}`;
+
+const DnDFlow = () => {
+  const reactFlowWrapper = useRef(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
+  const onConnect = (params) => setElements((els) => addEdge(params, els));
+  const onElementsRemove = (elementsToRemove) =>
+    setElements((els) => removeElements(elementsToRemove, els));
 
-  // console.log(window.innerHeight, window.innerWidth);
+  const onLoad = (reactFlowInstance) => {
+    setReactFlowInstance(reactFlowInstance);
+    reactFlowInstance.fitView();
+    console.log(reactFlowInstance);
+  };
+
+  const onDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const onDrop = (event) => {
+    event.preventDefault();
+
+    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+    const type = event.dataTransfer.getData("application/reactflow");
+    const position = reactFlowInstance.project({
+      x: event.clientX - reactFlowBounds.left,
+      y: event.clientY - reactFlowBounds.top,
+    });
+    const newNode = {
+      id: getId(),
+      type,
+      position,
+      data: { label: `${type} node` },
+    };
+
+    setElements((es) => es.concat(newNode));
+  };
+
   return (
     <div className='grid grid-cols-4 gap-4'>
-      <div className='bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'>
-        <ReactFlow elements={initialElements} onLoad={onLoad}>
-          <Controls />
-        </ReactFlow>
-      </div>
-      <div>This is new div</div>
+      <ReactFlowProvider>
+        <div
+          className='reactflow-wrapper bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'
+          ref={reactFlowWrapper}
+        >
+          <ReactFlow
+            elements={elements}
+            onConnect={onConnect}
+            onElementsRemove={onElementsRemove}
+            onLoad={onLoad}
+            onDrop={onDrop}
+            onDragOver={onDragOver}
+          >
+            <Controls />
+          </ReactFlow>
+        </div>
+        <Sidebar />
+      </ReactFlowProvider>
     </div>
   );
-}
+};
+
+export default DnDFlow;
