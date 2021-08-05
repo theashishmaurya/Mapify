@@ -1,7 +1,17 @@
-import React from "react";
-import ReactFlow from "react-flow-renderer";
+import { useUser } from "@auth0/nextjs-auth0";
+import React, { useEffect, useState, useRef } from "react";
+import ReactFlow, {
+  Controls,
+  ReactFlowProvider,
+  addEdge,
+  removeElements,
+} from "react-flow-renderer";
 export default function Roadmap() {
-  const elements = [
+  // const { user, error, isLoading } = useUser();
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>{error.message}</div>;
+
+  const initialElements = [
     {
       id: "1",
       type: "input", // input node
@@ -25,9 +35,21 @@ export default function Roadmap() {
     { id: "e1-2", source: "1", target: "2" },
     { id: "e2-3", source: "2", target: "3" },
   ];
+  const onLoad = (reactFlowInstance) => {
+    console.log("flow loaded:", reactFlowInstance);
+    reactFlowInstance.fitView();
+  };
+  const [elements, setElements] = useState(initialElements);
+
+  // console.log(window.innerHeight, window.innerWidth);
   return (
-    <div className='bg-gray-200' style={{ height: "100vh" }}>
-      <ReactFlow elements={elements} />
+    <div className='grid grid-cols-4 gap-4'>
+      <div className='bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'>
+        <ReactFlow elements={initialElements} onLoad={onLoad}>
+          <Controls />
+        </ReactFlow>
+      </div>
+      <div>This is new div</div>
     </div>
   );
 }

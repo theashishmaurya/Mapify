@@ -1,7 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
-import userImage from "../../../public/image/mainpage.png";
-const Navbar = () => {
+import uuidstring from "../roadmap/api/uuidstring";
+const Navbar = (props) => {
+  const { user, error, isLoading } = props;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  // const createRoute = `/create/${user.sub}`;
+  const createRoute = uuidstring();
+  console.log(createRoute);
+
   return (
     <div className='bg-black py-2'>
       <div className='navbar grid grid-cols-3 tracking-wide text-white py-2 container mx-auto'>
@@ -16,21 +22,13 @@ const Navbar = () => {
             <Link href='/dashboard'>Dashboard</Link>
           </div>
           <div className='mx-2'>
-            <Link href='/createroadmap'>Create+</Link>
+            <Link href={createRoute}>Create+</Link>
           </div>
         </div>
         <div className='flex justify-end font-bold px-2 flex content-end'>
           <Link href='/'>
             <div className='border-2 border-gray-200 rounded-full flex items-center justify-center cursor px-2 py-1'>
-              <span className='mx-2'>Username</span>
-
-              <Image
-                src={userImage}
-                alt='Userimage'
-                width={32}
-                height={32}
-                className='rounded-full'
-              />
+              <span className='mx-2'> {user.nickname}</span>
             </div>
           </Link>
 
