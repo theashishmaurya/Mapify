@@ -1,13 +1,15 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 import { toPng } from "html-to-image";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
   removeElements,
   Controls,
+  Background,
 } from "react-flow-renderer";
 
 import Sidebar from "./sidebar";
+import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 
 const initialElements = [
   {
@@ -15,6 +17,7 @@ const initialElements = [
     type: "default",
     data: { label: "input node" },
     position: { x: 250, y: 5 },
+    style: { background: "#f09d3e" },
   },
 ];
 
@@ -22,6 +25,8 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = () => {
+  const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
+  console.log(roadmapData);
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
@@ -56,6 +61,7 @@ const DnDFlow = () => {
       position,
       data: { label: `${data}` },
     };
+    // child node style = style: { padding: 5, width: 100 },
 
     setElements((es) => es.concat(newNode));
   };
@@ -79,6 +85,7 @@ const DnDFlow = () => {
             ref={canvasRef}
           >
             <Controls />
+            <Background variant='dots' gap={12} size={0.5} color='#000' />
           </ReactFlow>
         </div>
 
