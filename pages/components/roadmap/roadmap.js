@@ -26,7 +26,6 @@ const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = () => {
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
-  console.log(roadmapData);
   const [nodeColor, setNodeColor] = useState("#fff");
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);

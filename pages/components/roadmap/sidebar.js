@@ -47,12 +47,20 @@ export default function Sidebar({ canvasRef }) {
       edgeType: roadmapData.edgeType,
     };
     setRoadmapData(newData);
+    console.log(roadmapData.background);
+    console.log(color.background);
   };
   const handleClick = () => {
     setDisplayColorPicker(!displayColorPicker);
   };
   const handleClose = () => {
     setDisplayColorPicker(false);
+    const newData = {
+      data: roadmapData.data,
+      background: color.background,
+      edgeType: roadmapData.edgeType,
+    };
+    setRoadmapData(newData);
   };
   const popover = {
     position: "absolute",
