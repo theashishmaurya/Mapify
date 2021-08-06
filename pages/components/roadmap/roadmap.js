@@ -27,22 +27,28 @@ const getId = () => `dndnode_${id++}`;
 const DnDFlow = () => {
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   console.log(roadmapData);
+  const [nodeColor, setNodeColor] = useState("#fff");
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
-  const onConnect = (params) => setElements((els) => addEdge(params, els));
+  const onConnect = (params) => {
+    const newparams = { ...params, type: roadmapData.edgeType };
+    console.log(elements);
+    setElements((els) => addEdge(newparams, els));
+    console.log(elements);
+  };
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els));
 
   const onLoad = (reactFlowInstance) => {
     setReactFlowInstance(reactFlowInstance);
     reactFlowInstance.fitView();
-    console.log(reactFlowInstance);
   };
 
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
+    setNodeColor(roadmapData.background);
   };
 
   const onDrop = (event) => {
@@ -50,7 +56,6 @@ const DnDFlow = () => {
     console.log(event.dataTransfer);
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = event.dataTransfer.getData("application/reactflow");
-    console.log(data);
     const position = reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
@@ -60,6 +65,7 @@ const DnDFlow = () => {
       type: "default",
       position,
       data: { label: `${data}` },
+      style: { background: nodeColor },
     };
     // child node style = style: { padding: 5, width: 100 },
 

@@ -12,7 +12,7 @@ export default function Sidebar({ canvasRef }) {
   };
 
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
-  console.log(roadmapData, "from sidebar");
+  // console.log(roadmapData, "from sidebar");
   const [detail, setDetail] = useState("Drag me");
   const handleOnChange = (e) => {
     setDetail(e.target.value);
@@ -41,7 +41,12 @@ export default function Sidebar({ canvasRef }) {
   });
   const handleColorChange = (col) => {
     setColor({ background: col.hex });
-    console.log(color);
+    const newData = {
+      data: roadmapData.data,
+      background: color.background,
+      edgeType: roadmapData.edgeType,
+    };
+    setRoadmapData(newData);
   };
   const handleClick = () => {
     setDisplayColorPicker(!displayColorPicker);
