@@ -4,6 +4,7 @@ import smoothstep from "../../../public/image/smoothstep.png";
 import bezier from "../../../public/image/default.png";
 import straight from "../../../public/image/line.png";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
+import { useState } from "react";
 const Card = ({ img }) => {
   return (
     <div className='flex justify-center items-center bg-gray-100 border-2 rounded-md  p-4  cursor-pointer'>
@@ -11,6 +12,7 @@ const Card = ({ img }) => {
     </div>
   );
 };
+
 const styles = {
   borderColor: "#0099ff",
   borderStyle: "solid",
@@ -19,7 +21,16 @@ const styles = {
 
 const Edges = () => {
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
+
   const handleOnClick = (name) => {
+    for (const property in style) {
+      if (property == name) {
+        console.log(property, style[property]);
+        style[property] = styles;
+      } else {
+        style[property] = null;
+      }
+    }
     const newData = {
       data: roadmapData.data,
       background: roadmapData.background,
@@ -27,14 +38,19 @@ const Edges = () => {
     };
     setRoadmapData(newData);
   };
+  const [style, setStyle] = useState({
+    smoothstep: null,
+    default: null,
+    straight: null,
+  });
   return (
-    <div className='edges flex justify-arround '>
+    <div className='edges flex justify-arround'>
       <div
         className='rounded-md m-2'
         onClick={() => {
           handleOnClick("smoothstep");
         }}
-        style={styles}
+        style={style.smoothstep}
       >
         <Card img={smoothstep} />
       </div>
@@ -43,6 +59,7 @@ const Edges = () => {
         onClick={() => {
           handleOnClick("default");
         }}
+        style={style.default}
       >
         <Card img={bezier} />
       </div>
@@ -51,6 +68,7 @@ const Edges = () => {
         onClick={() => {
           handleOnClick("straight");
         }}
+        style={style.straight}
       >
         <Card img={straight} />
       </div>

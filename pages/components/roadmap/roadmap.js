@@ -27,6 +27,7 @@ const getId = () => `dndnode_${id++}`;
 const DnDFlow = () => {
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   const [nodeColor, setNodeColor] = useState("#fff");
+  const [saveElements, setSaveElements] = useState(null);
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
@@ -70,14 +71,26 @@ const DnDFlow = () => {
 
     setElements((es) => es.concat(newNode));
   };
-  ////////////////////////HTML to canvas//////////////////////
+  ////////////////////////HTML to canvas////////////////////////
   const canvasRef = useRef(null);
+  ///////////////////////////Save and Restore ///////////////////
+
+  const handleSave = () => {
+    setSaveElements(elements);
+    console.log(saveElements);
+  };
+  const handleRestore = () => {
+    if (saveElements) {
+      setElements(saveElements);
+      console.log(elements);
+    }
+  };
 
   return (
     <div className='grid grid-cols-4'>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'
+          className='reactflow-wrapper  min-h-screen min-w-min col-span-3 border-2 border-black'
           ref={reactFlowWrapper}
         >
           <ReactFlow
@@ -90,12 +103,20 @@ const DnDFlow = () => {
             ref={canvasRef}
           >
             <Controls />
-            <Background variant='dots' gap={12} size={0.5} color='#000' />
+            <Background
+              variant='dots'
+              gap={12}
+              size={0.5}
+              color='#000'
+              style={{ background: "#fff" }}
+            />
           </ReactFlow>
         </div>
 
         <div>
           <Sidebar canvasRef={canvasRef} />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleRestore}>Restore</button>
         </div>
       </ReactFlowProvider>
     </div>
