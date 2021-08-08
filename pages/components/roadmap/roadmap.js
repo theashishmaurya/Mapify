@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback, useContext } from "react";
-import { toPng } from "html-to-image";
+import React, { useState, useRef, useContext } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -7,10 +6,11 @@ import ReactFlow, {
   Controls,
   Background,
 } from "react-flow-renderer";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 import Sidebar from "./sidebar";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
-
+import firebase from "../../../firebase/clientApp";
 const initialElements = [
   {
     id: "1",
@@ -25,6 +25,22 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = () => {
+  const [value, loading, error] = useCollection(
+    firebase.firestore().collection("roadmap"),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
+
+  if (error) {
+    console.log("error");
+    return null;
+  }
+  const firestoreData = value.docs.map(
+    (doc) => doc._delegate._document.data.value.mapValue.fields
+  );
+  console.log(firestoreData);
+
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   const [nodeColor, setNodeColor] = useState("#fff");
   const [saveElements, setSaveElements] = useState(null);

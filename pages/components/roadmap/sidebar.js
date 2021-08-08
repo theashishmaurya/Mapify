@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { toPng } from "html-to-image";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
-import { ChromePicker, CompactPicker, TwitterPicker } from "react-color";
+import { TwitterPicker } from "react-color";
 import Edges from "./edges";
 import Image from "next/image";
 import colorWheel from "../../../public/image/color.png";
