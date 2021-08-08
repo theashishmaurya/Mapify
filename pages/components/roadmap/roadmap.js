@@ -5,12 +5,15 @@ import ReactFlow, {
   removeElements,
   Controls,
   Background,
+  useZoomPanHelper,
 } from "react-flow-renderer";
-import { useCollection } from "react-firebase-hooks/firestore";
-
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import Sidebar from "./sidebar";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 import firebase from "../../../firebase/clientApp";
+import { v4 as uuidv4 } from "uuid";
+
+const db = firebase.firestore();
 const initialElements = [
   {
     id: "1",
@@ -21,37 +24,31 @@ const initialElements = [
   },
 ];
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+const DnDFlow = ({ docid }) => {
+  // const [value, loading, error] = useDocument(
+  //   db.doc("be33284a-dd18-4a1a-8a9e-5a4c33309da0"),
+  //   {
+  //     // snapshotListenOptions: { includeMetadataChanges: true },
+  //   }
+  // );
 
-const DnDFlow = () => {
-  const [value, loading, error] = useCollection(
-    firebase.firestore().collection("roadmap"),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
+  // if (error) {
+  //   console.log("error");
+  //   return null;
+  // }
 
-  if (error) {
-    console.log("error");
-    return null;
-  }
-  const firestoreData = value.docs.map(
-    (doc) => doc._delegate._document.data.value.mapValue.fields
-  );
-  console.log(firestoreData);
-
+  // console.log(value);
+  const { transform } = useZoomPanHelper();
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   const [nodeColor, setNodeColor] = useState("#fff");
-  const [saveElements, setSaveElements] = useState(null);
+  const [rfInstance, setRfInstance] = useState(null);
+  const [save, setSave] = useState(null);
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
   const onConnect = (params) => {
     const newparams = { ...params, type: roadmapData.edgeType };
-    console.log(elements);
     setElements((els) => addEdge(newparams, els));
-    console.log(elements);
   };
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els));
@@ -59,6 +56,7 @@ const DnDFlow = () => {
   const onLoad = (reactFlowInstance) => {
     setReactFlowInstance(reactFlowInstance);
     reactFlowInstance.fitView();
+    setRfInstance(reactFlowInstance);
   };
 
   const onDragOver = (event) => {
@@ -77,7 +75,7 @@ const DnDFlow = () => {
       y: event.clientY - reactFlowBounds.top,
     });
     const newNode = {
-      id: getId(),
+      id: uuidv4(),
       type: "default",
       position,
       data: { label: `${data}` },
@@ -91,15 +89,42 @@ const DnDFlow = () => {
   const canvasRef = useRef(null);
   ///////////////////////////Save and Restore ///////////////////
 
-  const handleSave = () => {
-    setSaveElements(elements);
-    console.log(saveElements);
-  };
-  const handleRestore = () => {
-    if (saveElements) {
-      setElements(saveElements);
-      console.log(elements);
+  const handleSave = async () => {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      setSave(flow);
+      console.log(rfInstance.toObject());
+      await db
+        .collection("roadmap")
+        .doc(docid)
+        .set({
+          user: "userID",
+          flow,
+        })
+        .then(() => {
+          console.log("Saved Data");
+        });
     }
+  };
+  const handleRestore = async () => {
+    // const flow = save;
+    // const [x = 0, y = 0] = save.position;
+    // setElements(save.elements || []);
+    // transform({ x: y, zoom: save.zoom || 0 });
+    // console.log(rfInstance.toObject());
+    await db
+      .collection("roadmap")
+      .doc(docid)
+      .get()
+      .then((doc) => {
+        console.log(doc.data());
+        const flow = doc.data().flow;
+        const [x = 0, y = 0] = flow.position;
+        setElements(flow.elements || []);
+        transform({ x: y, zoom: flow.zoom || 0 });
+        console.log(rfInstance.toObject());
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

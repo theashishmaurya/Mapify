@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
+import { ReactFlowProvider } from "react-flow-renderer";
 import Roadmap from "../components/roadmap/roadmap";
 const Create = () => {
   const router = useRouter();
   const { pid } = router.query;
-  console.log(pid);
   return (
     <div>
-      <Roadmap />
+      <ReactFlowProvider>
+        <Roadmap docid={pid} />
+      </ReactFlowProvider>
     </div>
   );
 };
