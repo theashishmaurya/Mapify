@@ -79,7 +79,7 @@ export default function Sidebar({ canvasRef }) {
         <div className='description font-bold text-xl mb-2 pt-2'>
           You can drag the nodes to the pane on the right.
         </div>
-        <div className='bg-gray-100 cursor-pointer py-4 flex justify-center border-2 border-gray-200 dot'>
+        <div className='bg-gray-100 cursor-move py-4 flex justify-center border-2 border-gray-200 dot'>
           <div
             className='border-2 border-black p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md'
             style={{ background: color.background }}
