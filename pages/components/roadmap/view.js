@@ -152,10 +152,12 @@ const View = ({ docid }) => {
     <div className='grid'>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper  min-h-screen min-w-min  border-2 border-black'
+          className='reactflow-wrapper  min-h-screen min-w-min border-2 border-black'
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            nodesDraggable={false}
+            nodesConnectable={false}
             elements={elements}
             onConnect={onConnect}
             onElementsRemove={onElementsRemove}
@@ -165,13 +167,7 @@ const View = ({ docid }) => {
             ref={canvasRef}
           >
             <Controls />
-            <Background
-              variant='dots'
-              gap={12}
-              size={0.5}
-              color='#000'
-              style={{ background: "#fff" }}
-            />
+            {/* <Background style={{ background: "#fff" }} /> */}
           </ReactFlow>
         </div>
       </ReactFlowProvider>

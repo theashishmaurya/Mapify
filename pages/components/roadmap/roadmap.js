@@ -79,6 +79,7 @@ const DnDFlow = ({ docid }) => {
       type: "default",
       position,
       data: { label: `${data}` },
+      nodesDraggable: false,
       style: { background: nodeColor },
     };
     // child node style = style: { padding: 5, width: 100 },
