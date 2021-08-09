@@ -5,7 +5,7 @@ import { TwitterPicker } from "react-color";
 import Edges from "./edges";
 import Image from "next/image";
 import colorWheel from "../../../public/image/color.png";
-export default function Sidebar({ canvasRef }) {
+export default function Sidebar({ canvasRef, handleSave }) {
   const onDragStart = (event, nodeData) => {
     event.dataTransfer.setData("application/reactflow", nodeData);
     event.dataTransfer.effectAllowed = "move";
@@ -17,7 +17,19 @@ export default function Sidebar({ canvasRef }) {
   const handleOnChange = (e) => {
     setDetail(e.target.value);
   };
+  const handleDocChange = (e) => {
+    setDocName(e.target.value);
+  };
 
+  const handleOnDocSubmit = (e) => {
+    e.preventDefault();
+    setRoadmapData({
+      data: roadmapData.data,
+      background: color.background,
+      edgeType: roadmapData.edgeType,
+      title: docName,
+    });
+  };
   const onSaveImage = () => {
     if (canvasRef.current === null) {
       console.log("null");
@@ -39,6 +51,7 @@ export default function Sidebar({ canvasRef }) {
   const [color, setColor] = useState({
     background: "#fff",
   });
+  const [docName, setDocName] = useState("untitled");
   const handleColorChange = (col) => {
     setColor({ background: col.hex });
     const newData = {
@@ -76,6 +89,20 @@ export default function Sidebar({ canvasRef }) {
   return (
     <div className=' min-h-full'>
       <div className='mx-2'>
+        <div className='font-medium'>
+          {" "}
+          Roadmap /{" "}
+          <span>
+            <form onSubmit={handleOnDocSubmit} className='inline-block'>
+              <input
+                type='text'
+                placeholder='untitled'
+                className='border-b-2 focus:outline-none'
+                onChange={handleDocChange}
+              />
+            </form>
+          </span>
+        </div>
         <div className='description font-bold text-xl mb-2 pt-2'>
           You can drag the nodes to the pane on the right.
         </div>
@@ -137,6 +164,12 @@ export default function Sidebar({ canvasRef }) {
       </div>
 
       <footer className='flex justify-end'>
+        <button
+          className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
+          onClick={handleSave}
+        >
+          Save
+        </button>
         <button
           className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
           onClick={onSaveImage}

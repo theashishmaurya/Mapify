@@ -8,6 +8,7 @@ function RoadmapData(props) {
     data: "Data",
     background: "#fff",
     edgeType: "default",
+    title: "untitled",
   });
   return (
     <RoadmapContext.Provider value={[roadmapData, setRoadmapData]}>

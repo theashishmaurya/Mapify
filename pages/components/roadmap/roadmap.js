@@ -12,6 +12,7 @@ import Sidebar from "./sidebar";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 import firebase from "../../../firebase/clientApp";
 import { v4 as uuidv4 } from "uuid";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const db = firebase.firestore();
 const initialElements = [
@@ -36,9 +37,14 @@ const DnDFlow = ({ docid }) => {
   //   console.log("error");
   //   return null;
   // }
-
   // console.log(value);
+  const { user, error, isLoading } = useUser();
+  // const { transform } = useZoomPanHelper();
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>{error.message}</div>;
   const { transform } = useZoomPanHelper();
+
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   const [nodeColor, setNodeColor] = useState("#fff");
   const [rfInstance, setRfInstance] = useState(null);
@@ -46,6 +52,7 @@ const DnDFlow = ({ docid }) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
+
   const onConnect = (params) => {
     const newparams = { ...params, type: roadmapData.edgeType };
     setElements((els) => addEdge(newparams, els));
@@ -79,7 +86,6 @@ const DnDFlow = ({ docid }) => {
       type: "default",
       position,
       data: { label: `${data}` },
-      nodesDraggable: false,
       style: { background: nodeColor },
     };
     // child node style = style: { padding: 5, width: 100 },
@@ -99,7 +105,8 @@ const DnDFlow = ({ docid }) => {
         .collection("roadmap")
         .doc(docid)
         .set({
-          user: "userID",
+          title: roadmapData.title,
+          user: user.sub,
           flow,
         })
         .then(() => {
@@ -107,27 +114,25 @@ const DnDFlow = ({ docid }) => {
         });
     }
   };
-  const handleRestore = async () => {
-    // const flow = save;
-    // const [x = 0, y = 0] = save.position;
-    // setElements(save.elements || []);
-    // transform({ x: y, zoom: save.zoom || 0 });
-    // console.log(rfInstance.toObject());
-    await db
-      .collection("roadmap")
-      .doc(docid)
-      .get()
-      .then((doc) => {
-        console.log(doc.data());
-        const flow = doc.data().flow;
-        const [x = 0, y = 0] = flow.position;
-        setElements(flow.elements || []);
-        transform({ x: y, zoom: flow.zoom || 0 });
-        console.log(rfInstance.toObject());
-      })
-      .catch((err) => console.log(err));
-  };
+  // const handleRestore = async () => {
+  //   await db
+  //     .collection("roadmap")
+  //     .doc(docid)
+  //     .get()
+  //     .then((doc) => {
+  //       console.log(doc.data());
+  //       const flow = doc.data().flow;
+  //       const [x = 0, y = 0] = flow.position;
+  //       setElements(flow.elements || []);
+  //       transform({ x: y, zoom: flow.zoom || 0 });
+  //       // console.log(rfInstance.toObject());
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  console.log(roadmapData);
   return (
     <div className='grid grid-cols-4'>
       <ReactFlowProvider>
@@ -156,9 +161,7 @@ const DnDFlow = ({ docid }) => {
         </div>
 
         <div>
-          <Sidebar canvasRef={canvasRef} />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleRestore}>Restore</button>
+          <Sidebar canvasRef={canvasRef} handleSave={handleSave} />
         </div>
       </ReactFlowProvider>
     </div>
