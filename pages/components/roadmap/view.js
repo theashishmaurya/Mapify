@@ -1,8 +1,10 @@
+import { handleLogin } from "@auth0/nextjs-auth0";
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   Controls,
   useZoomPanHelper,
+  Handle,
 } from "react-flow-renderer";
 
 import firebase from "../../../firebase/clientApp";
@@ -47,11 +49,53 @@ const View = ({ docid }) => {
     } else {
       console.log("no pid");
     }
+    return () => {
+      setElements(null);
+    };
   }, [docid]);
   const onLoad = async (reactFlowInstance) => {
     setReactFlowInstance(reactFlowInstance);
     reactFlowInstance.fitView();
     setRfInstance(reactFlowInstance);
+  };
+  const horizontalConnector = ({ data }) => {
+    return (
+      <div
+        style={{ padding: "10px 40px", fontSize: 10 }}
+        className='border border-black px-10 rounded-md  '
+      >
+        <Handle
+          type='target'
+          position='top'
+          id='1'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+
+        <div>{data.label}</div>
+
+        <Handle
+          id='2'
+          type='source'
+          position='bottom'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+        <Handle
+          type='target'
+          position='left'
+          id='3'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+        <Handle
+          type='source'
+          position='right'
+          id='4'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+      </div>
+    );
+  };
+  const nodeTypes = {
+    horizontalConnector,
   };
 
   return (
@@ -66,6 +110,7 @@ const View = ({ docid }) => {
             nodesConnectable={false}
             elements={elements}
             onLoad={onLoad}
+            nodeTypes={nodeTypes}
           >
             <Controls />
           </ReactFlow>

@@ -16,6 +16,13 @@ export default function Sidebar({ canvasRef, handleSave }) {
   const [detail, setDetail] = useState("Drag me");
   const handleOnChange = (e) => {
     setDetail(e.target.value);
+
+    setRoadmapData({
+      data: e.target.value,
+      background: roadmapData.background,
+      edgeType: roadmapData.edgeType,
+      title: roadmapData.title,
+    });
   };
   const handleDocChange = (e) => {
     setDocName(e.target.value);
@@ -58,6 +65,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
       data: roadmapData.data,
       background: color.background,
       edgeType: roadmapData.edgeType,
+      title: roadmapData.title,
     };
     setRoadmapData(newData);
     console.log(roadmapData.background);
@@ -72,6 +80,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
       data: roadmapData.data,
       background: color.background,
       edgeType: roadmapData.edgeType,
+      title: roadmapData.title,
     };
     setRoadmapData(newData);
   };
@@ -111,8 +120,8 @@ export default function Sidebar({ canvasRef, handleSave }) {
             className='border-2 border-black p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md'
             style={{ background: color.background }}
             onDragStart={(event) => {
-              onDragStart(event, detail);
-              setDetail("Drag me");
+              onDragStart(event, "target");
+              setDetail("new data");
             }}
             draggable
           >

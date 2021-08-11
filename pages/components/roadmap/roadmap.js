@@ -6,6 +6,7 @@ import ReactFlow, {
   Controls,
   Background,
   useZoomPanHelper,
+  Handle,
 } from "react-flow-renderer";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import Sidebar from "./sidebar";
@@ -83,10 +84,10 @@ const DnDFlow = ({ docid }) => {
     });
     const newNode = {
       id: uuidv4(),
-      type: "default",
+      type: "horizontalConnector",
       position,
-      data: { label: `${data}` },
-      style: { background: nodeColor },
+      data: { label: `${roadmapData.data}` },
+      style: { background: nodeColor, borderRadius: "0.375rem" },
     };
     // child node style = style: { padding: 5, width: 100 },
 
@@ -114,21 +115,47 @@ const DnDFlow = ({ docid }) => {
         });
     }
   };
-  // const handleRestore = async () => {
-  //   await db
-  //     .collection("roadmap")
-  //     .doc(docid)
-  //     .get()
-  //     .then((doc) => {
-  //       console.log(doc.data());
-  //       const flow = doc.data().flow;
-  //       const [x = 0, y = 0] = flow.position;
-  //       setElements(flow.elements || []);
-  //       transform({ x: y, zoom: flow.zoom || 0 });
-  //       // console.log(rfInstance.toObject());
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+
+  const horizontalConnector = ({ data }) => {
+    console.log(data);
+    return (
+      <div
+        style={{ padding: "10px 40px", fontSize: 10 }}
+        className='border border-black px-10 rounded-md  '
+      >
+        <Handle
+          type='target'
+          position='top'
+          id='1'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+
+        <div>{data.label}</div>
+
+        <Handle
+          id='2'
+          type='source'
+          position='bottom'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+        <Handle
+          type='target'
+          position='left'
+          id='3'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+        <Handle
+          type='source'
+          position='right'
+          id='4'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+      </div>
+    );
+  };
+  const nodeTypes = {
+    horizontalConnector,
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -141,6 +168,7 @@ const DnDFlow = ({ docid }) => {
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            nodeTypes={nodeTypes}
             elements={elements}
             onConnect={onConnect}
             onElementsRemove={onElementsRemove}

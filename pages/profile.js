@@ -51,9 +51,9 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className='post-container m-40'>
+        <div className='post-container my-40 mx-10'>
           <div className='flex justify-center text-4xl font-bold'>RoadMaps</div>
-          <div className='card grid grid-cols-3 justify-items-center  m-6 gap-4'>
+          <div className='card grid grid-cols-2 justify-items-center  m-6 gap-4'>
             {posts.map((data) => {
               const path = `/view/${data.id}`;
               return (
