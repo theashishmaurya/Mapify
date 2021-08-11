@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { PostContext } from "../../api/post/postContextProvider";
 
-const Modal = ({ setShowModal }) => {
+const Modal = ({ setShowModal, postId }) => {
+  const [postData, setPostData] = useContext(PostContext);
+  console.log(postData, postId);
+  const [temp, setTemp] = useState({
+    title: "",
+    description: "",
+  });
+  const handleChange = (name) => (e) => {
+    setTemp({ ...temp, [name]: e.target.value });
+    console.log(temp);
+  };
   return (
     <>
-      <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
-        <div className='relative w-auto my-6 mx-auto max-w-3xl'>
+      <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50  outline-none  focus:outline-none'>
+        <div className='relative w-auto my-6 mx-auto max-w-3xl w-2xl w-1/2'>
           {/*content*/}
           <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
             {/*header*/}
@@ -14,15 +25,20 @@ const Modal = ({ setShowModal }) => {
             {/*body*/}
             <div className='relative p-6 flex-auto'>
               <p className='my-4 text-blueGray-500 text-lg leading-relaxed'>
-                <label for='title'>Title</label>
                 <input
                   className='focus:outline-none border-b-2 w-full'
                   type='text'
                   id='posst-title'
                   name='post-title'
+                  placeholder='Title'
+                  onChange={() => handleChange("title")}
                 />{" "}
                 <br></br>
-                <textarea className='resize border rounded-md w-full '></textarea>
+                <textarea
+                  className='resize border rounded-md w-full my-10 px-2 p-1 h-60'
+                  placeholder='Enter Description Here'
+                  onChange={() => handleChange("description")}
+                ></textarea>
               </p>
             </div>
             {/*footer*/}

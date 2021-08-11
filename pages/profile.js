@@ -1,5 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import firebase from "../firebase/clientApp";
 import Modal from "./components/postModal/Modal";
@@ -8,7 +8,7 @@ export default function Profile() {
   const db = firebase.firestore();
   const [showModal, setShowModal] = useState(false);
   const [posts, setPosts] = useState([]);
-
+  const [postId, setPostId] = useState(null);
   useEffect(async () => {
     if (!isLoading) {
       await db
@@ -17,7 +17,6 @@ export default function Profile() {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log(doc.id, doc.data().title);
             setPosts((post) => [
               ...post,
               { id: doc.id, title: doc.data().title },
@@ -26,6 +25,9 @@ export default function Profile() {
         })
         .catch((err) => console.log(err));
     }
+    return () => {
+      setPosts([]);
+    };
   }, [isLoading]);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -57,7 +59,10 @@ export default function Profile() {
             {posts.map((data) => {
               const path = `/view/${data.id}`;
               return (
-                <div className='w-full h-30 border-2 m-6 grid grid-cols-2 shadow-md rounded-md hover:text-white hover:bg-black'>
+                <div
+                  className='w-full h-30 border-2 m-6 grid grid-cols-2 shadow-md rounded-md hover:text-white hover:bg-black'
+                  key={data.id}
+                >
                   <Link href={path}>
                     <div className=' justify-start p-4 text-xl cursor-pointer font-bold'>
                       <div> {data.title}</div>
@@ -66,7 +71,11 @@ export default function Profile() {
                   <div className=' flex justify-end m-2'>
                     <button
                       className='bg-black text-white border-2 py-2 px-4 items-center rounded-lg'
-                      onClick={() => setShowModal(true)}
+                      onClick={() => {
+                        setShowModal(true);
+                        setPostId(data.id);
+                        console.log(postId);
+                      }}
                     >
                       post
                     </button>
@@ -77,7 +86,11 @@ export default function Profile() {
           </div>
         </div>
         {showModal ? (
-          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <Modal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            postId={postId}
+          />
         ) : null}
         {/* <Modal /> */}
       </div>

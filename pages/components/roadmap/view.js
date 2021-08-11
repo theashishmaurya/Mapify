@@ -5,7 +5,9 @@ import ReactFlow, {
   Controls,
   useZoomPanHelper,
   Handle,
+  ControlButton,
 } from "react-flow-renderer";
+import { toPng } from "html-to-image";
 
 import firebase from "../../../firebase/clientApp";
 
@@ -28,6 +30,7 @@ const View = ({ docid }) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
+  const canvasRef = useRef(null);
 
   useEffect(async () => {
     if (docid) {
@@ -42,17 +45,18 @@ const View = ({ docid }) => {
           const [x = 0, y = 0] = flow.position;
           setElements(flow.elements || []);
           transform({ x: y, zoom: flow.zoom || 0 });
-          console.log(rfInstance.toObject());
-          onLoad(rfInstance);
+          // console.log(flow);
+          rfInstance.fitView();
+          reactFlowInstance.fitView();
         })
         .catch((err) => console.log(err));
     } else {
       console.log("no pid");
     }
     return () => {
-      setElements(null);
+      setReactFlowInstance(null);
     };
-  }, [docid]);
+  }, [docid, rfInstance]);
   const onLoad = async (reactFlowInstance) => {
     setReactFlowInstance(reactFlowInstance);
     reactFlowInstance.fitView();
@@ -97,12 +101,29 @@ const View = ({ docid }) => {
   const nodeTypes = {
     horizontalConnector,
   };
+  const onSaveImage = () => {
+    rfInstance.fitView();
+    if (canvasRef.current === null) {
+      console.log("null");
+      return;
+    }
+    toPng(canvasRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "my-Roadmap.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div className='grid'>
+    <div className='grid' ref={canvasRef}>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper  min-h-screen min-w-min border-2 border-black'
+          className='reactflow-wrapper  min-h-screen min-w-min border-2 border-black relative'
           ref={reactFlowWrapper}
         >
           <ReactFlow
@@ -112,7 +133,30 @@ const View = ({ docid }) => {
             onLoad={onLoad}
             nodeTypes={nodeTypes}
           >
-            <Controls />
+            <Controls>
+              <ControlButton onClick={onSaveImage}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-6 w-6'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z'
+                  />
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M15 13a3 3 0 11-6 0 3 3 0 016 0z'
+                  />
+                </svg>{" "}
+              </ControlButton>
+            </Controls>
           </ReactFlow>
         </div>
       </ReactFlowProvider>

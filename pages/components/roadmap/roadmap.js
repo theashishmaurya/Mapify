@@ -55,7 +55,10 @@ const DnDFlow = ({ docid }) => {
   const [elements, setElements] = useState(initialElements);
 
   const onConnect = (params) => {
-    const newparams = { ...params, type: roadmapData.edgeType };
+    const newparams = {
+      ...params,
+      type: roadmapData.edgeType,
+    };
     setElements((els) => addEdge(newparams, els));
   };
   const onElementsRemove = (elementsToRemove) =>
@@ -112,6 +115,7 @@ const DnDFlow = ({ docid }) => {
         })
         .then(() => {
           console.log("Saved Data");
+          alert("Your data is saved");
         });
     }
   };
@@ -120,7 +124,7 @@ const DnDFlow = ({ docid }) => {
     console.log(data);
     return (
       <div
-        style={{ padding: "10px 40px", fontSize: 10 }}
+        style={{ padding: "10px 40px", fontSize: 15 }}
         className='border border-black px-10 rounded-md  '
       >
         <Handle
@@ -136,13 +140,13 @@ const DnDFlow = ({ docid }) => {
           id='2'
           type='source'
           position='bottom'
-          style={{ borderRadius: "50%", background: "green" }}
+          style={{ borderRadius: "50%", background: "red" }}
         />
         <Handle
           type='target'
           position='left'
           id='3'
-          style={{ borderRadius: "50%", background: "red" }}
+          style={{ borderRadius: "50%", background: "green" }}
         />
         <Handle
           type='source'
