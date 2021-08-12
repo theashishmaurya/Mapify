@@ -12,7 +12,7 @@ const PostContextProvider = ({ children }) => {
       Descriptionn: "None",
       comments: [],
       votes: 0,
-      userId: "",
+      userId: user ? user.sub : null,
       //VotedBy: [UserID]  so that they can't vote again and again
       //LikedBy :[UserID] so that they can't like again and again
     }
@@ -25,7 +25,7 @@ const PostContextProvider = ({ children }) => {
         Descriptionn: postData.Descriptionn,
         comments: postData.comments,
         votes: postData.votes,
-        userId: user.sub,
+        userId: user ? user.sub : null,
       });
     }
   }, [isLoading]);

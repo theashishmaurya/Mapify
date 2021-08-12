@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import firebase from "../firebase/clientApp";
 import Modal from "./components/postModal/Modal";
+import { PostContext } from "./api/post/postContextProvider";
 export default function Profile() {
   const { user, error, isLoading } = useUser();
   const db = firebase.firestore();
@@ -29,6 +30,7 @@ export default function Profile() {
       setPosts([]);
     };
   }, [isLoading]);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
