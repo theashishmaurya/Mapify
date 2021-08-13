@@ -1,4 +1,3 @@
-import { handleLogin } from "@auth0/nextjs-auth0";
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
@@ -123,7 +122,7 @@ const View = ({ docid }) => {
     <div className='grid' ref={canvasRef}>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper  min-h-screen min-w-min border-2 border-black relative'
+          className='reactflow-wrapper  min-h-screen min-w-min  border-black relative'
           ref={reactFlowWrapper}
         >
           <ReactFlow
