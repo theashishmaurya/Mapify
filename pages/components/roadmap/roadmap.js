@@ -14,7 +14,7 @@ import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 import firebase from "../../../firebase/clientApp";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@auth0/nextjs-auth0";
-
+import "./roadmap.module.css";
 const db = firebase.firestore();
 const initialElements = [
   {
@@ -55,9 +55,11 @@ const DnDFlow = ({ docid }) => {
   const [elements, setElements] = useState(initialElements);
 
   const onConnect = (params) => {
+    console.log(params);
     const newparams = {
       ...params,
       type: roadmapData.edgeType,
+      style: { strokeWidth: 2 },
     };
     setElements((els) => addEdge(newparams, els));
   };
@@ -119,13 +121,48 @@ const DnDFlow = ({ docid }) => {
         });
     }
   };
+  const CircleConnector = ({ data }) => {
+    return (
+      <div
+        style={{ padding: "20px", fontSize: 15, border: "50%" }}
+        className='border border-black'
+      >
+        <Handle
+          type='target'
+          position='top'
+          id='1'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+
+        <div>{data.label}</div>
+
+        <Handle
+          id='2'
+          type='source'
+          position='bottom'
+          style={{ borderRadius: "50%", background: "red" }}
+        />
+        <Handle
+          type='target'
+          position='left'
+          id='3'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+        <Handle
+          type='source'
+          position='right'
+          id='4'
+          style={{ borderRadius: "50%", background: "green" }}
+        />
+      </div>
+    );
+  };
 
   const horizontalConnector = ({ data }) => {
-    console.log(data);
     return (
       <div
         style={{ padding: "10px 40px", fontSize: 15 }}
-        className='border border-black px-10 rounded-md  '
+        className='border border-black px-10 rounded-md'
       >
         <Handle
           type='target'
@@ -159,6 +196,10 @@ const DnDFlow = ({ docid }) => {
   };
   const nodeTypes = {
     horizontalConnector,
+    CircleConnector,
+  };
+  const connectionLineStyle = {
+    background: "#000",
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -168,7 +209,7 @@ const DnDFlow = ({ docid }) => {
     <div className='grid grid-cols-4'>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper  min-h-screen min-w-min col-span-3 border-2 border-black'
+          className='reactflow-wrapper min-h-screen min-w-min col-span-3 border-2 border-black'
           ref={reactFlowWrapper}
         >
           <ReactFlow

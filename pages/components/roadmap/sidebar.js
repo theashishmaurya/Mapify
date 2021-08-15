@@ -172,19 +172,91 @@ export default function Sidebar({ canvasRef, handleSave }) {
         <Edges />
       </div>
 
-      <footer className='flex justify-end'>
-        <button
-          className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
-          onClick={handleSave}
-        >
-          Save
-        </button>
-        <button
-          className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
-          onClick={onSaveImage}
-        >
-          Download
-        </button>
+      <footer>
+        <div className='mx-2 my-2'>
+          <h1 className='font-bold'>Guide </h1>
+          <div className='text-sm text-gray-600 '>
+            <div className=' flex'>
+              Click
+              <span className='inline-block'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-6 w-6'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122'
+                  />
+                </svg>
+              </span>
+              to select a node
+            </div>
+            <div>
+              <div>
+                {" "}
+                <span>
+                  Backspace{" "}
+                  <span>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-6 w-6 inline-block'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                      />
+                    </svg>
+                  </span>
+                </span>{" "}
+                to delete selected node / edge
+              </div>
+              <div>
+                <span>
+                  Shift{" "}
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-6 w-6 inline-block'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M8 7l4-4m0 0l4 4m-4-4v18'
+                    />
+                  </svg>{" "}
+                </span>
+                + Mouse drag select to select mutiple nodes
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='flex my-4'>
+          <button
+            className='border-2 border-black px-4 py-2 mx-2 rounded-md text-white font-medium bg-black flex justify-end'
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <button
+            className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
+            onClick={onSaveImage}
+          >
+            Download
+          </button>
+        </div>
       </footer>
     </div>
   );
