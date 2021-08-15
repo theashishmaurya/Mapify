@@ -10,8 +10,8 @@ const Navbar = (props) => {
   console.log(createRoute);
 
   return (
-    <div className='bg-black'>
-      <div className='navbar  text-white grid grid-cols-3 tracking-wide  py-2 container mx-auto'>
+    <div className='shadow-md'>
+      <div className='navbar grid grid-cols-3 tracking-wide  py-2 container mx-auto'>
         <div className='logo flex justify-start'>
           <h3 className='font-extrabold text-3xl'>Mapify</h3>
         </div>
@@ -28,14 +28,27 @@ const Navbar = (props) => {
         </div>
         <div className='flex justify-end font-medium px-2 flex content-end'>
           <Link href='/profile'>
-            <div className='border-2 border-gray-600 rounded-full flex items-center justify-center cursor-pointer	 px-2 py-1'>
+            <div className='flex items-center justify-center cursor-pointer	 px-2 py-1'>
               <span className='mx-2'> {user.nickname}</span>
             </div>
           </Link>
 
           <Link href='/api/auth/logout'>
-            <button className='button font-medium text-sm text-white bg-black border rounded-md p-2 px-4 mx-4'>
-              Logout
+            <button className='button font-medium text-sm bg-white  p-2  mx-2'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-6 w-6'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
+                />
+              </svg>
             </button>
           </Link>
         </div>

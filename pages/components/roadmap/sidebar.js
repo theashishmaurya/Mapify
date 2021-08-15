@@ -5,6 +5,7 @@ import { TwitterPicker } from "react-color";
 import Edges from "./edges";
 import Image from "next/image";
 import colorWheel from "../../../public/image/color.png";
+
 export default function Sidebar({ canvasRef, handleSave }) {
   const onDragStart = (event, nodeData) => {
     event.dataTransfer.setData("application/reactflow", nodeData);
@@ -115,9 +116,9 @@ export default function Sidebar({ canvasRef, handleSave }) {
         <div className='description font-bold text-xl mb-2 pt-2'>
           You can drag the nodes to the pane on the right.
         </div>
-        <div className='bg-gray-100 cursor-move py-4 flex justify-center border-2 border-gray-200 dot'>
+        <div className='bg-gray-100 cursor-move py-4 flex justify-center rounded-md'>
           <div
-            className='border-2 border-black p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md'
+            className=' p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md shadow-md'
             style={{ background: color.background }}
             onDragStart={(event) => {
               onDragStart(event, "target");
@@ -245,13 +246,13 @@ export default function Sidebar({ canvasRef, handleSave }) {
         </div>
         <div className='flex my-4'>
           <button
-            className='border-2 border-black px-4 py-2 mx-2 rounded-md text-white font-medium bg-black flex justify-end'
+            className='px-4 py-2 mx-2 rounded-md text-white font-medium bg-blue-600 flex justify-end'
             onClick={handleSave}
           >
             Save
           </button>
           <button
-            className='border-2 border-black px-4 py-2 rounded-md text-white font-medium bg-black flex justify-end'
+            className='px-4 py-2 rounded-md text-white font-medium bg-green-600 flex justify-end'
             onClick={onSaveImage}
           >
             Download

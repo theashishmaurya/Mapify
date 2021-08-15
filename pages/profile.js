@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import firebase from "../firebase/clientApp";
 import Modal from "./components/postModal/Modal";
-import { PostContext } from "./api/post/postContextProvider";
+import router from "next/router";
 export default function Profile() {
   const { user, error, isLoading } = useUser();
   const db = firebase.firestore();
@@ -39,7 +39,26 @@ export default function Profile() {
       <div className=''>
         <div className='user-container'>
           <div className='bg-black w-full h-80 '>
-            <div className='relative top-60	'>
+            <div
+              className='z-2 p-4 cursor-pointer'
+              onClick={() => router.back()}
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-6 w-6'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='white'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                />
+              </svg>
+            </div>
+            <div className='relative top-48	'>
               <div className='user-card flex justify-center'>
                 <div className='card  '>
                   <img
@@ -57,29 +76,33 @@ export default function Profile() {
         </div>
         <div className='post-container my-40 mx-10'>
           <div className='flex justify-center text-4xl font-bold'>RoadMaps</div>
-          <div className='card grid grid-cols-2 justify-items-center  m-6 gap-4'>
+          <div className='card grid grid-cols-2 justify-items-center  m-6 gap-10'>
             {posts.map((data) => {
               const path = `/view/${data.id}`;
               return (
                 <div
-                  className='w-full h-30 border-2 m-6 grid grid-cols-2 shadow-md rounded-md hover:text-white hover:bg-black'
+                  className='w-full h-30  m-6 grid grid-cols-2 shadow-md rounded-md mx-4 hover:scale-105'
                   key={data.id}
                 >
-                  <Link href={path}>
-                    <div className=' justify-start p-4 text-xl cursor-pointer font-bold'>
-                      <div> {data.title}</div>
-                    </div>
-                  </Link>
+                  <div className=' justify-start p-4 text-xl font-bold'>
+                    <div> {data.title}</div>
+                  </div>
+
                   <div className=' flex justify-end m-2'>
+                    <Link href={path}>
+                      <button className='bg-white text-black shadow-md py-2 mx-2 px-4 items-center rounded-lg'>
+                        View
+                      </button>
+                    </Link>
                     <button
-                      className='bg-black text-white border-2 py-2 px-4 items-center rounded-lg'
+                      className='bg-blue-600 text-white border-2 shadow-md py-2 px-4 items-center rounded-lg'
                       onClick={() => {
                         setShowModal(true);
                         setPostId(data.id);
                         console.log(postId);
                       }}
                     >
-                      post
+                      Post
                     </button>
                   </div>
                 </div>

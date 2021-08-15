@@ -7,7 +7,7 @@ import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 import { useState } from "react";
 const Card = ({ img }) => {
   return (
-    <div className='flex justify-center items-center bg-gray-100 border-2 rounded-md  p-4  cursor-pointer'>
+    <div className='flex justify-center items-center  rounded-md  p-4  shadow-md cursor-pointer'>
       <Image src={img} width={80} height={80} />
     </div>
   );
