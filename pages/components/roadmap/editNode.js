@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const EditNode = ({ setIsSidebarActive }) => {
+const EditNode = ({
+  setIsSidebarActive,
+  setSelectedNode,
+  selectedNode,
+  elements,
+  setElements,
+}) => {
   const [tempNode, setTempNode] = useState({
     style: { borderRadius: "0.375rem", padding: "10px 40px" },
     className: "shadow-md bg-white",
@@ -9,6 +15,30 @@ const EditNode = ({ setIsSidebarActive }) => {
   const HandleChange = (name) => (e) => {
     setTempNode({ ...tempNode, [name]: e.target.value });
   };
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    // setSelectedNode({
+    //   ...selectedNode,
+    //   className: tempNode.className,
+    //   style: tempNode.style,
+    // });
+    const className = tempNode.className;
+    console.log("fine");
+    setElements((els) =>
+      els.map((el) => {
+        if (el.id == selectedNode.id) {
+          el.data = {
+            ...el.data,
+            label: tempNode.data,
+          };
+          el.className = className;
+        }
+        return el;
+      })
+    );
+    console.log(elements);
+  };
+  //fast
   return (
     <div className='mx-2'>
       <div className='flex justify-start my-3'>
@@ -63,7 +93,10 @@ const EditNode = ({ setIsSidebarActive }) => {
         ></textarea>
       </div>
       <div className='flex justify-end'>
-        <button className='p-3 px-6 bg-blue-600 text-white my-2  rounded-md'>
+        <button
+          className='p-3 px-6 bg-blue-600 text-white my-2 rounded-md'
+          onClick={HandleSubmit}
+        >
           Save
         </button>
       </div>

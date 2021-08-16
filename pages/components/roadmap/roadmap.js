@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -176,11 +176,17 @@ const DnDFlow = ({ docid }) => {
   const connectionLineStyle = {
     background: "#000",
   };
+  const [selectedNode, setSelectedNode] = useState();
   const onSelect = (event, el) => {
     console.log("element selected");
     console.log(el);
     setIsSidebarActive(false);
+    setSelectedNode(el);
+    console.log(elements);
   };
+  useEffect(() => {
+    console.log("data modified");
+  }, [setElements, elements]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -219,7 +225,13 @@ const DnDFlow = ({ docid }) => {
           {isSidebarActive ? (
             <Sidebar canvasRef={canvasRef} handleSave={handleSave} />
           ) : (
-            <EditNode setIsSidebarActive={setIsSidebarActive} />
+            <EditNode
+              setIsSidebarActive={setIsSidebarActive}
+              selectedNode={selectedNode}
+              setSelectedNode={setSelectedNode}
+              elements={elements}
+              setElements={setElements}
+            />
           )}
         </div>
       </ReactFlowProvider>
