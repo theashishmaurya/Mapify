@@ -95,7 +95,7 @@ export default function Profile() {
                       </button>
                     </Link>
                     <button
-                      className='bg-blue-600 text-white border-2 shadow-md py-2 px-4 items-center rounded-lg'
+                      className='bg-blue-600 text-white shadow-md py-2 px-4 items-center rounded-lg'
                       onClick={() => {
                         setShowModal(true);
                         setPostId(data.id);

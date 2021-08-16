@@ -165,10 +165,10 @@ const DnDFlow = ({ docid }) => {
         className='border border-black px-10 rounded-md'
       >
         <Handle
-          type='target'
+          type='source'
           position='top'
           id='1'
-          style={{ borderRadius: "50%", background: "red" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
 
         <div>{data.label}</div>
@@ -177,19 +177,19 @@ const DnDFlow = ({ docid }) => {
           id='2'
           type='source'
           position='bottom'
-          style={{ borderRadius: "50%", background: "red" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
         <Handle
-          type='target'
+          type='source'
           position='left'
           id='3'
-          style={{ borderRadius: "50%", background: "green" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
         <Handle
           type='source'
           position='right'
           id='4'
-          style={{ borderRadius: "50%", background: "green" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
       </div>
     );
@@ -221,6 +221,7 @@ const DnDFlow = ({ docid }) => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             ref={canvasRef}
+            connectionMode={"loose"}
           >
             <Controls />
             <Background

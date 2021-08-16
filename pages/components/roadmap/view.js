@@ -68,10 +68,10 @@ const View = ({ docid }) => {
         className='border border-black px-10 rounded-md  '
       >
         <Handle
-          type='target'
+          type='source'
           position='top'
           id='1'
-          style={{ borderRadius: "50%", background: "red" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
 
         <div>{data.label}</div>
@@ -80,19 +80,19 @@ const View = ({ docid }) => {
           id='2'
           type='source'
           position='bottom'
-          style={{ borderRadius: "50%", background: "green" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
         <Handle
-          type='target'
+          type='source'
           position='left'
           id='3'
-          style={{ borderRadius: "50%", background: "red" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
         <Handle
           type='source'
           position='right'
           id='4'
-          style={{ borderRadius: "50%", background: "green" }}
+          style={{ borderRadius: "50%", background: "black" }}
         />
       </div>
     );
@@ -122,7 +122,7 @@ const View = ({ docid }) => {
     <div className='grid' ref={canvasRef}>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper  min-h-screen min-w-min  border-black relative'
+          className='reactflow-wrapper bg-gray-100 min-h-screen min-w-min  border-black relative'
           ref={reactFlowWrapper}
         >
           <ReactFlow
@@ -131,6 +131,7 @@ const View = ({ docid }) => {
             elements={elements}
             onLoad={onLoad}
             nodeTypes={nodeTypes}
+            connectionMode={"loose"}
           >
             <Controls>
               <ControlButton onClick={onSaveImage}>
