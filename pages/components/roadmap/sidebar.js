@@ -16,6 +16,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
   // console.log(roadmapData, "from sidebar");
   const [detail, setDetail] = useState("Drag me");
   const handleOnChange = (e) => {
+    e.preventDefault();
     setDetail(e.target.value);
 
     setRoadmapData({
@@ -107,7 +108,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
               <input
                 type='text'
                 placeholder='untitled'
-                className='border-b-2 focus:outline-none'
+                className='border-b-2 focus:outline-none inline-block'
                 onChange={handleDocChange}
               />
             </form>
@@ -129,23 +130,22 @@ export default function Sidebar({ canvasRef, handleSave }) {
             {detail}
           </div>
         </div>
-        <form action='submit'>
-          <div className='input'>
-            <div className='my-2'>
-              <label htmlFor='input' className='font-medium '>
-                Add description
-              </label>
-            </div>
-            <input
-              className='border-2 border-gray-400 rounded-lg  w-full p-2 '
-              type='text'
-              name='node'
-              placeholder='Type something'
-              value={detail}
-              onChange={handleOnChange}
-            />
+
+        <div className='input'>
+          <div className='my-2'>
+            <label htmlFor='input' className='font-medium '>
+              Add description
+            </label>
           </div>
-        </form>
+          <input
+            className='border-2 border-gray-400 rounded-lg  w-full p-2 '
+            type='text'
+            name='node'
+            placeholder='Type something'
+            value={detail}
+            onChange={handleOnChange}
+          />
+        </div>
       </div>
       {/* <div
         className='flex justify-center my-4 p-8 m-2 border-2 border-gray-400 rounded-xl '

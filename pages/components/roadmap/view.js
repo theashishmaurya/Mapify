@@ -64,8 +64,8 @@ const View = ({ docid }) => {
   const horizontalConnector = ({ data }) => {
     return (
       <div
-        style={{ padding: "10px 40px", fontSize: 10 }}
-        className='border border-black px-10 rounded-md  '
+      // style={{ padding: "10px 40px", fontSize: 10 }}
+      // className='border border-black px-10 rounded-md  '
       >
         <Handle
           type='source'

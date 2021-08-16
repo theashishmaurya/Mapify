@@ -15,14 +15,20 @@ import firebase from "../../../firebase/clientApp";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@auth0/nextjs-auth0";
 import "./roadmap.module.css";
+import EditNode from "./editNode";
 const db = firebase.firestore();
 const initialElements = [
   {
     id: "1",
-    type: "default",
+    type: "horizontalConnector",
     data: { label: "input node" },
     position: { x: 250, y: 5 },
-    style: { background: "#f09d3e" },
+    className: "shadow-md",
+    style: {
+      background: "#f09d3e",
+      padding: "10px 50px",
+      borderRadius: "0.375rem",
+    },
   },
 ];
 
@@ -53,6 +59,7 @@ const DnDFlow = ({ docid }) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
+  const [isSidebarActive, setIsSidebarActive] = useState(true);
 
   const onConnect = (params) => {
     console.log(params);
@@ -92,7 +99,12 @@ const DnDFlow = ({ docid }) => {
       type: "horizontalConnector",
       position,
       data: { label: `${roadmapData.data}` },
-      style: { background: nodeColor, borderRadius: "0.375rem" },
+      className: "shadow-md",
+      style: {
+        background: nodeColor,
+        borderRadius: "0.375rem",
+        padding: "10px 40px",
+      },
     };
     // child node style = style: { padding: 5, width: 100 },
 
@@ -121,48 +133,12 @@ const DnDFlow = ({ docid }) => {
         });
     }
   };
-  const CircleConnector = ({ data }) => {
-    return (
-      <div
-        style={{ padding: "20px", fontSize: 15, border: "50%" }}
-        className='border border-black'
-      >
-        <Handle
-          type='target'
-          position='top'
-          id='1'
-          style={{ borderRadius: "50%", background: "red" }}
-        />
-
-        <div>{data.label}</div>
-
-        <Handle
-          id='2'
-          type='source'
-          position='bottom'
-          style={{ borderRadius: "50%", background: "red" }}
-        />
-        <Handle
-          type='target'
-          position='left'
-          id='3'
-          style={{ borderRadius: "50%", background: "green" }}
-        />
-        <Handle
-          type='source'
-          position='right'
-          id='4'
-          style={{ borderRadius: "50%", background: "green" }}
-        />
-      </div>
-    );
-  };
 
   const horizontalConnector = ({ data }) => {
     return (
       <div
-        style={{ padding: "10px 40px", fontSize: 15 }}
-        className='border border-black px-10 rounded-md'
+      // style={{ padding: "10px 40px", fontSize: 15 }}
+      // className='border border-black px-10 rounded-md'
       >
         <Handle
           type='source'
@@ -196,15 +172,19 @@ const DnDFlow = ({ docid }) => {
   };
   const nodeTypes = {
     horizontalConnector,
-    CircleConnector,
   };
   const connectionLineStyle = {
     background: "#000",
   };
+  const onSelect = (event, el) => {
+    console.log("element selected");
+    console.log(el);
+    setIsSidebarActive(false);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
-  console.log(roadmapData);
+
   return (
     <div className='grid grid-cols-4'>
       <ReactFlowProvider>
@@ -222,6 +202,7 @@ const DnDFlow = ({ docid }) => {
             onDragOver={onDragOver}
             ref={canvasRef}
             connectionMode={"loose"}
+            onElementClick={onSelect}
           >
             <Controls />
             <Background
@@ -235,7 +216,11 @@ const DnDFlow = ({ docid }) => {
         </div>
 
         <div>
-          <Sidebar canvasRef={canvasRef} handleSave={handleSave} />
+          {isSidebarActive ? (
+            <Sidebar canvasRef={canvasRef} handleSave={handleSave} />
+          ) : (
+            <EditNode setIsSidebarActive={setIsSidebarActive} />
+          )}
         </div>
       </ReactFlowProvider>
     </div>
