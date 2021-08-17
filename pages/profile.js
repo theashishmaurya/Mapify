@@ -64,7 +64,7 @@ export default function Profile() {
                   <img
                     src={user.picture}
                     alt='user-profile pic'
-                    className='rounded-full border-2'
+                    className='rounded-full h-40 w-40 border-2'
                   />
                   <div className='flex justify-center text-xl font-medium'>
                     {user.nickname}

@@ -5,6 +5,7 @@ import { TwitterPicker } from "react-color";
 import Edges from "./edges";
 import Image from "next/image";
 import colorWheel from "../../../public/image/color.png";
+import router from "next/router";
 
 export default function Sidebar({ canvasRef, handleSave }) {
   const onDragStart = (event, nodeData) => {
@@ -99,20 +100,42 @@ export default function Sidebar({ canvasRef, handleSave }) {
   };
   return (
     <div className=' min-h-full'>
-      <div className='mx-2'>
-        <div className='font-medium'>
-          {" "}
-          Roadmap /{" "}
-          <span>
-            <form onSubmit={handleOnDocSubmit} className='inline-block'>
-              <input
-                type='text'
-                placeholder='untitled'
-                className='border-b-2 focus:outline-none inline-block'
-                onChange={handleDocChange}
+      <div className='mx-1'>
+        <div className='flex justify-start my-1'>
+          <button
+            onClick={() => router.push("/home")}
+            className='rounded-full shadow-md p-2 mx-1 grid items-start'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-6 w-6'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M10 19l-7-7m0 0l7-7m-7 7h18'
               />
-            </form>
-          </span>
+            </svg>
+          </button>
+
+          <div className='font-medium mx-2 flex items-center'>
+            {" "}
+            Roadmap /{" "}
+            <span>
+              <form onSubmit={handleOnDocSubmit} className='inline-block'>
+                <input
+                  type='text'
+                  placeholder='untitled'
+                  className='border-b-2 focus:outline-none inline-block'
+                  onChange={handleDocChange}
+                />
+              </form>
+            </span>
+          </div>
         </div>
         <div className='description font-bold text-xl mb-2 pt-2'>
           You can drag the nodes to the pane on the right.

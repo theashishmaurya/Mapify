@@ -97,7 +97,7 @@ const EditNode = ({
           className='p-3 px-6 bg-blue-600 text-white my-2 rounded-md'
           onClick={HandleSubmit}
         >
-          Save
+          Update
         </button>
       </div>
     </div>

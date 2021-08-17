@@ -33,7 +33,7 @@ const PostPage = ({ pid }) => {
       <Navbar />
       {!isloadingDoc && (
         <div className='container mx-auto overflow-x-hidden	'>
-          <div className='text-5xl mx-20 font-bold mx-auto my-20 container flex justify-center'>
+          <div className='text-5xl  font-bold mx-auto my-20 container flex justify-center'>
             {postData.title}
           </div>
 
