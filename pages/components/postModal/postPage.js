@@ -1,4 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
+import { info } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 import firebase from "../../../firebase/clientApp";
 import Navbar from "../home/Navbar";
@@ -9,6 +10,8 @@ const PostPage = ({ pid }) => {
   const db = firebase.firestore();
   const { user, isloading, error } = useUser();
   const [isloadingDoc, setIsLoadingDoc] = useState(true);
+
+  let docData;
   useEffect(async () => {
     if (pid !== undefined) {
       console.log(pid);
@@ -20,14 +23,26 @@ const PostPage = ({ pid }) => {
         .then((doc) => {
           setPostData(doc.data());
           console.log(doc.data());
-          console.log(postData);
+          let html = doc.data().description;
+          let docData = new window.DOMParser().parseFromString(
+            html,
+            "text/html"
+          );
+          setPostData({
+            ...postData,
+            description: docData.documentElement.innerHTML,
+          });
+          console.log(docData.documentElement.innerHTML);
+
           setIsLoadingDoc(false);
         })
         .catch((err) => console.log(err));
     } else {
       console.log("PID loading");
     }
+    return () => info();
   }, [pid]);
+  let html = <div>Ashish</div>;
   return (
     <div>
       <Navbar />
@@ -40,8 +55,16 @@ const PostPage = ({ pid }) => {
           <div className=' mx-auto border shadow-md'>
             <View docid={postData.roadmapId} />
           </div>
-          <div className='text-xl font-medium my-10 mx-20'>
-            {postData.description}
+          <div
+            className='my-10 mx-20 .leading-relaxed
+
+'
+          >
+            <div
+              dangerouslySetInnerHTML={{ __html: postData.description }}
+            ></div>
+
+            {/* {postData.description} */}
           </div>
           <div className='mx-20 flex items-center m-4 mb-20 '>
             {/* <img src={user.picture} alt='' className='rounded-full w-8 h-8 ' /> */}

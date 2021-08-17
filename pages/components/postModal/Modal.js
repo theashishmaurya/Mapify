@@ -2,6 +2,10 @@ import { useUser } from "@auth0/nextjs-auth0";
 import React, { useState } from "react";
 import firebase from "../../../firebase/clientApp";
 import { v4 as uuidv4 } from "uuid";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+import "react-quill/dist/quill.snow.css"; // ES6
 
 const Modal = ({ setShowModal, postId }) => {
   // const [postData, setPostData] = useContext(PostContext);
@@ -19,6 +23,9 @@ const Modal = ({ setShowModal, postId }) => {
     console.log(name);
     setTemp({ ...temp, [name]: e.target.value });
     console.log(temp);
+  };
+  const handleDescriptionChange = (value) => {
+    setTemp({ ...temp, description: value });
   };
 
   const handlePostSubmit = async (e) => {
@@ -73,11 +80,10 @@ const Modal = ({ setShowModal, postId }) => {
                   onChange={handleChange("title")}
                 />{" "}
                 <br></br>
-                <textarea
-                  className='resize border rounded-md w-full my-10 px-2 p-1 h-60'
-                  placeholder='Enter Description Here'
-                  onChange={handleChange("description")}
-                ></textarea>
+                <ReactQuill
+                  value={temp.description}
+                  onChange={handleDescriptionChange}
+                />
               </p>
             </div>
             {/*footer*/}
