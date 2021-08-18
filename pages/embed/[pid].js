@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 import { ReactFlowProvider } from "react-flow-renderer";
-import View from "../components/roadmap/view";
+import Embed from "../components/roadmap/embed";
 
-const Create = () => {
+const Embedable = () => {
   const router = useRouter();
   const { pid } = router.query;
   return (
     <div>
       <ReactFlowProvider>
-        <View docid={pid} />
+        <Embed docid={pid} />
       </ReactFlowProvider>
     </div>
   );
 };
 
-export default Create;
+export default Embedable;

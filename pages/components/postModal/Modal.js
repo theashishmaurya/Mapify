@@ -45,8 +45,10 @@ const Modal = ({ setShowModal, postId }) => {
               description: temp.description,
               comments: [],
               votes: 0,
-              userId: user.sub,
+              user: user,
               roadmapId: postId,
+              createdAt: new Date(),
+              tags: [],
             })
             .then(() => alert("your post has been successfully posted"))
             .catch((err) => console.log(err));
@@ -80,14 +82,17 @@ const Modal = ({ setShowModal, postId }) => {
                   onChange={handleChange("title")}
                 />{" "}
                 <br></br>
-                <ReactQuill
-                  value={temp.description}
-                  onChange={handleDescriptionChange}
-                />
+                <div className='my-4'>
+                  <ReactQuill
+                    className='h-40'
+                    value={temp.description}
+                    onChange={handleDescriptionChange}
+                  />
+                </div>
               </p>
             </div>
             {/*footer*/}
-            <div className='flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b'>
+            <div className='flex items-center justify-end p-6 border-t mt-10 border-solid border-blueGray-200 rounded-b'>
               <button
                 className='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
                 type='button'

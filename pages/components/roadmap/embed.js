@@ -7,7 +7,6 @@ import ReactFlow, {
   ControlButton,
 } from "react-flow-renderer";
 import { toPng } from "html-to-image";
-import router, { useRouter } from "next/router";
 
 import firebase from "../../../firebase/clientApp";
 
@@ -22,7 +21,7 @@ const initialElements = [
   },
 ];
 
-const View = ({ docid }) => {
+const Embed = ({ docid }) => {
   const { transform } = useZoomPanHelper();
 
   const [rfInstance, setRfInstance] = useState(null);
@@ -40,7 +39,7 @@ const View = ({ docid }) => {
         .doc(docid)
         .get()
         .then((doc) => {
-          // console.log(doc.data());
+          console.log(doc.data());
           const flow = doc.data().flow;
           const [x = 0, y = 0] = flow.position;
           setElements(flow.elements || []);
@@ -104,7 +103,7 @@ const View = ({ docid }) => {
   const onSaveImage = () => {
     rfInstance.fitView();
     if (canvasRef.current === null) {
-      // console.log("null");
+      console.log("null");
       return;
     }
     toPng(canvasRef.current, { cacheBust: true })
@@ -135,27 +134,6 @@ const View = ({ docid }) => {
             connectionMode={"loose"}
           >
             <Controls>
-              <ControlButton
-                onClick={() => {
-                  console.log("editMe", docid);
-
-                  router.push(`/create/${docid}`);
-                }}
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-6 w-6'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
-                  <path
-                    fillRule='evenodd'
-                    d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              </ControlButton>
               <ControlButton onClick={onSaveImage}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -186,4 +164,4 @@ const View = ({ docid }) => {
   );
 };
 
-export default View;
+export default Embed;

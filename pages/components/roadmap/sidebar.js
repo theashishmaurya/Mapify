@@ -27,6 +27,8 @@ export default function Sidebar({ canvasRef, handleSave }) {
       title: roadmapData.title,
     });
   };
+  const [docName, setDocName] = useState("untitled");
+
   const handleDocChange = (e) => {
     setDocName(e.target.value);
   };
@@ -37,7 +39,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
       data: roadmapData.data,
       background: color.background,
       edgeType: roadmapData.edgeType,
-      title: docName,
+      title: docName !== undefined ? docName : "untitled",
     });
   };
   const onSaveImage = () => {
@@ -61,7 +63,6 @@ export default function Sidebar({ canvasRef, handleSave }) {
   const [color, setColor] = useState({
     background: "#fff",
   });
-  const [docName, setDocName] = useState("untitled");
   const handleColorChange = (col) => {
     setColor({ background: col.hex });
     const newData = {

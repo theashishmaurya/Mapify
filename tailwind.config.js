@@ -18,5 +18,6 @@ module.exports = {
         h3: { fontSize: theme("fontSize.lg") },
       });
     }),
+    require("@tailwindcss/line-clamp"),
   ],
 };

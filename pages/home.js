@@ -61,7 +61,10 @@ export default function Dashboard() {
                       <p className='text-lg font-bold  text-center'>
                         {post.title}
                       </p>
-                      <p className='text-lg '>{post.description}</p>
+                      <p
+                        className='text-lg line-clamp-3'
+                        dangerouslySetInnerHTML={{ __html: post.description }}
+                      ></p>
                       <Link href={`/post/${post.Postid}`}>
                         <div>
                           {" "}

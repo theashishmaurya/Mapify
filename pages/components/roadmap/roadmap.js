@@ -87,7 +87,7 @@ const DnDFlow = ({ docid }) => {
 
   const onDrop = (event) => {
     event.preventDefault();
-    console.log(event.dataTransfer);
+    // console.log(event.dataTransfer);
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = event.dataTransfer.getData("application/reactflow");
     const position = reactFlowInstance.project({
@@ -123,14 +123,16 @@ const DnDFlow = ({ docid }) => {
         .collection("roadmap")
         .doc(docid)
         .set({
-          title: roadmapData.title,
+          title:
+            roadmapData.title !== undefined ? roadmapData.title : "untitled",
           user: user.sub,
-          flow,
+          flow: flow,
         })
         .then(() => {
           console.log("Saved Data");
           alert("Your data is saved");
-        });
+        })
+        .catch((err) => console.log(err));
     }
   };
 
@@ -184,9 +186,29 @@ const DnDFlow = ({ docid }) => {
     setSelectedNode(el);
     console.log(elements);
   };
-  useEffect(() => {
+  useEffect(async () => {
     console.log("data modified");
-  }, [setElements, elements]);
+    if (docid) {
+      console.log("PIDDD");
+      await db
+        .collection("roadmap")
+        .doc(docid)
+        .get()
+        .then((doc) => {
+          // console.log(doc.data());
+          const flow = doc.data().flow;
+          const [x = 0, y = 0] = flow.position;
+          setElements(flow.elements || []);
+          transform({ x: y, zoom: flow.zoom || 0 });
+          // console.log(flow);
+          rfInstance.fitView();
+          reactFlowInstance.fitView();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      console.log("no pid");
+    }
+  }, [setElements, docid, rfInstance]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
