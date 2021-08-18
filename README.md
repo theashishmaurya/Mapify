@@ -1,29 +1,63 @@
-# Next.js + Tailwind CSS Example
+# Mapify
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+#### Making node-based content made simple.
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+Mapify is a simple node-based editor to create your flow-charts and Roadmaps balzing fast. :zap:
 
-## Preview
+## Motivation
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+Roadmaps and flows makes understanding easy but the whole problem with them is there are not enough services which provide simple UI and is developer friendly. Here, comes Mapify
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+#### Features
 
-## Deploy your own
+- Fully drag and add option to simple create new Node.
+- Style your Nodes with tailwind CSS or predefined styles.
+- Download the node in PNG format directly to your local
+- Find other people's post about new Roadmaps or flow-apps
+- Create your Embeddable link and embed them to your new blog post or your own site.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+### Previews
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Tech/frameworks used
 
-## How to use
+##### Built with
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+- This App Uses [Nextjs](https://nextjs.org/) as frontend Framework and uses [Firebase](https://firebase.google.com/) as backend.
+- It also uses [React-flow](https://reactflow.dev/) for node editor.
+- Right now its using Auth0 as IAAS.
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+## How to Install in your local.
+
+Clone this repository.
+
+```
+git pull https://github.com/Ashumaurya/Mapify
+
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Create a new file and set up your api key for Auth0 and firebase firestore.
+
+```
+AUTH0_SECRET='use [openssl rand -hex 32] to generate a 32 bytes value'
+AUTH0_BASE_URL='http://localhost:[YOUR PORT]'
+AUTH0_ISSUER_BASE_URL= [YOUR BASE URL]
+AUTH0_CLIENT_ID=[YOUR CLIENT ID]
+AUTH0_CLIENT_SECRET=[YOUR CLIENT SECRET]
+
+NEXT_PUBLIC_FIREBASE_APIKEY = [YOUR KEY]
+NEXT_PUBLIC_FIREBASE_AUTHDOMAIN  = [YOUR KEY]
+NEXT_PUBLIC_FIREBASE_PROJECTID = [YOUR FIREBASE PROJECT ID]
+NEXT_PUBLIC_FIREBASE_STORAGEBUCKET = [YOUR STORAGE BUCKET]
+NEXT_PUBLIC_FIREBASE_MESSAGINGSENDERID  = [YOUR KEY]
+NEXT_PUBLIC_FIREBASE_MEASUREMENTID =[YOUR KEY]
+
+```
+
+for more information about setting up [Auth0](https://auth0.com) read this [article](https://auth0.com/docs/quickstart/webapp/nextjs/01-login).
+for more information about settin up your [firebase](https://firebase.google.com) read this [article](https://firebase.google.com/docs/web/setup).
+
+## Liscense
+
+MIT License
+
+Copyright (c) 2021 Ashish maurya
