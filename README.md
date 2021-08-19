@@ -37,7 +37,7 @@ Roadmaps and flows makes understanding easy but the whole problem with them is t
 Clone this repository.
 
 ```
-git pull https://github.com/Ashumaurya/Mapify
+git clone https://github.com/Ashumaurya/Mapify
 
 ```
 
