@@ -1,3 +1,4 @@
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { ReactFlowProvider } from "react-flow-renderer";
 import View from "../components/roadmap/view";
@@ -15,3 +16,4 @@ const Create = () => {
 };
 
 export default Create;
+export const getServerSideProps = withPageAuthRequired();

@@ -1,4 +1,4 @@
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/home/Navbar";
 import banner from "../public/image/banner.png";
@@ -103,3 +103,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();

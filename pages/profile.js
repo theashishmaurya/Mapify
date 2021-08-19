@@ -1,4 +1,4 @@
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import firebase from "../firebase/clientApp";
@@ -122,3 +122,4 @@ export default function Profile() {
     )
   );
 }
+export const getServerSideProps = withPageAuthRequired();

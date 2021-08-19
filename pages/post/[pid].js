@@ -1,3 +1,4 @@
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { ReactFlowProvider } from "react-flow-renderer";
 import PostPage from "../components/postModal/postPage";
@@ -15,3 +16,4 @@ const Post = () => {
 };
 
 export default Post;
+export const getServerSideProps = withPageAuthRequired();
