@@ -2,7 +2,7 @@ import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import firebase from "../firebase/clientApp";
-import Modal from "./components/postModal/Modal";
+import Modal from "./components/post/Modal";
 import router from "next/router";
 export default function Profile() {
   const { user, error, isLoading } = useUser();

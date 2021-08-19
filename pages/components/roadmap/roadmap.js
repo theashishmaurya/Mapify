@@ -62,6 +62,7 @@ const DnDFlow = ({ docid }) => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
   const [isSidebarActive, setIsSidebarActive] = useState(true);
+  const [isDownloading, setDownloading] = useState(false);
 
   const onConnect = (params) => {
     console.log(params);
@@ -235,7 +236,7 @@ const DnDFlow = ({ docid }) => {
             connectionMode={"loose"}
             onElementClick={onSelect}
           >
-            <Controls />
+            {!isDownloading && <Controls />}
             <Background
               variant='dots'
               gap={12}
@@ -248,7 +249,11 @@ const DnDFlow = ({ docid }) => {
 
         <div>
           {isSidebarActive ? (
-            <Sidebar canvasRef={canvasRef} handleSave={handleSave} />
+            <Sidebar
+              canvasRef={canvasRef}
+              handleSave={handleSave}
+              setDownloading={setDownloading}
+            />
           ) : (
             <EditNode
               setIsSidebarActive={setIsSidebarActive}

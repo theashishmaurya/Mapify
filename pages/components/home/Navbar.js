@@ -1,16 +1,16 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 import uuidstring from "../roadmap/api/uuidstring";
+
 const Navbar = (props) => {
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   // const createRoute = `/create/${user.sub}`;
   const createRoute = uuidstring();
-  console.log(createRoute);
 
   return (
-    <div className='shadow-md'>
+    <div className='shadow-md px-20'>
       <div className='navbar grid grid-cols-3 tracking-wide  py-2 container mx-auto'>
         <div className='logo flex justify-start'>
           <h3 className='font-extrabold text-3xl'>Mapify</h3>

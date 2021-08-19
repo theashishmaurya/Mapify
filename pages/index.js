@@ -1,43 +1,19 @@
 import Head from "next/head";
-import Navbar from "./components/home/Navbar";
+import Navbar from "./components/LandingPage/Navbar";
 import Image from "next/image";
 import homeImage from "../public/image/mainpage.png";
 import Link from "next/link";
 export default function Home() {
   return (
-    <div className='container mx-auto my-4 max-h-screen'>
+    <div className='container mx-auto px-20 my-4 max-h-screen'>
       <Head>
         <title>Welcome</title>
         <link rel='icon' href='/favicon.ico' />
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <header>
         <div>
-          <div className='navbar grid grid-cols-3 tracking-wide my-2'>
-            <div className='logo flex justify-start'>
-              <h3 className='font-extrabold text-3xl'>Mapify</h3>
-            </div>
-            <div className='navs flex justify-center font-bold  p-2'>
-              <div className='mx-2'>
-                <Link href='/roadmaps'>Roadmap</Link>
-              </div>
-              <div className='mx-2'>
-                <Link href='/resources'>Resources+</Link>
-              </div>
-              <div className='mx-2'>
-                <Link href='/about'>About</Link>
-              </div>
-            </div>
-            <div className='flex justify-end font-bold px-2 flex content-end'>
-              <div className='login-button py-2 mx-2'>
-                <Link href='/api/auth/login'>Log in</Link>
-              </div>
-              <Link href='/api/auth/login'>
-                <button className='button font-medium text-sm text-white bg-black border rounded-md p-2 px-4 mx-2'>
-                  Try for free
-                </button>
-              </Link>
-            </div>
-          </div>
+          <Navbar />
         </div>
       </header>
       <main className='container mx-auto my-4 xl:my-16'>
@@ -82,7 +58,13 @@ export default function Home() {
           rel='noopener noreferrer'
         >
           Powered by{" "}
-          <img src='/vercel.svg' alt='Vercel Logo' className='h-4 ml-2' />
+          <Image
+            src='/vercel.svg'
+            alt='Vercel Logo'
+            className='h-4 ml-2'
+            width={60}
+            height={60}
+          />
         </a>
       </footer>
     </div>

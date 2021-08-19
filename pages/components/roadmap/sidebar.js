@@ -7,7 +7,7 @@ import Image from "next/image";
 import colorWheel from "../../../public/image/color.png";
 import router from "next/router";
 
-export default function Sidebar({ canvasRef, handleSave }) {
+export default function Sidebar({ canvasRef, handleSave, setDownloading }) {
   const onDragStart = (event, nodeData) => {
     event.dataTransfer.setData("application/reactflow", nodeData);
     event.dataTransfer.effectAllowed = "move";
@@ -42,23 +42,27 @@ export default function Sidebar({ canvasRef, handleSave }) {
       title: docName !== undefined ? docName : "untitled",
     });
   };
+
   const onSaveImage = () => {
     if (canvasRef.current === null) {
       console.log("null");
       return;
     }
+    setDownloading(true);
+
     toPng(canvasRef.current, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement("a");
         link.download = "my-Roadmap.png";
         link.href = dataUrl;
         link.click();
+        setDownloading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  ////////////////////Color picker functions /////////////////////////////
+  //////////////////// Color picker functions /////////////////////////////
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [color, setColor] = useState({
     background: "#fff",

@@ -6,6 +6,7 @@ import Image from "next/image";
 import firebase from "../firebase/clientApp";
 import Link from "next/link";
 import dummy from "../public/image/mainpage.png";
+import Head from "next/head";
 
 export default function Dashboard() {
   const { user, error, isLoading } = useUser();
@@ -28,6 +29,10 @@ export default function Dashboard() {
   }, []);
   return (
     <div>
+      <Head>
+        <title>Home</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
       <Navbar user={user} error={error} isLoading={isLoading} />
       <div>
         {/*  */}
