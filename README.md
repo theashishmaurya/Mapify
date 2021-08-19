@@ -19,10 +19,10 @@ Roadmaps and flows makes understanding easy but the whole problem with them is t
 ### Previews
 
 - Creating and adding a new node
-  (https://raw.githubusercontent.com/Ashumaurya/Mapify/main/screenshots/Mapify.gif)
+  [New node](https://raw.githubusercontent.com/Ashumaurya/Mapify/main/screenshots/Mapify.gif)
 
 - A React Fundamentals Roadmap
-  (https://raw.githubusercontent.com/Ashumaurya/Mapify/main/screenshots/ReactBasics.png)
+  [React basics](https://raw.githubusercontent.com/Ashumaurya/Mapify/main/screenshots/ReactBasics.png)
 
 ## Tech/frameworks used
 
