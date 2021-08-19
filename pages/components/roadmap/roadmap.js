@@ -51,8 +51,8 @@ const DnDFlow = ({ docid }) => {
 
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>{error.message}</div>;
-  const store = useStore();
-  const { transform } = useZoomPanHelper();
+  // const store = useStore();
+  // const { transform } = useZoomPanHelper();
 
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   const [nodeColor, setNodeColor] = useState("#fff");
@@ -201,7 +201,8 @@ const DnDFlow = ({ docid }) => {
           const flow = doc.data().flow;
           const [x = 0, y = 0] = flow.position;
           setElements(flow.elements || []);
-          transform({ x: y, zoom: flow.zoom || 0 });
+          // transform({ x: y, zoom: flow.zoom || 0 });
+          reactFlowInstance.setTransform({ x: y, zoom: flow.zoom || 0 });
           // console.log(flow);
           rfInstance.fitView();
           reactFlowInstance.fitView();

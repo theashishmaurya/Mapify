@@ -22,7 +22,7 @@ const initialElements = [
 ];
 
 const Embed = ({ docid }) => {
-  const { transform } = useZoomPanHelper();
+  // const { transform } = useZoomPanHelper();
 
   const [rfInstance, setRfInstance] = useState(null);
 
@@ -43,7 +43,7 @@ const Embed = ({ docid }) => {
           const flow = doc.data().flow;
           const [x = 0, y = 0] = flow.position;
           setElements(flow.elements || []);
-          transform({ x: y, zoom: flow.zoom || 0 });
+          reactFlowInstance.setTransform({ x: y, zoom: flow.zoom || 0 });
           // console.log(flow);
           rfInstance.fitView();
           reactFlowInstance.fitView();
