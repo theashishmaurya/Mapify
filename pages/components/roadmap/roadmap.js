@@ -7,8 +7,9 @@ import ReactFlow, {
   Background,
   useZoomPanHelper,
   Handle,
+  useStore,
 } from "react-flow-renderer";
-import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+
 import Sidebar from "./sidebar";
 import { RoadmapContext } from "../../api/roadmap/roadmapContext";
 import firebase from "../../../firebase/clientApp";
@@ -50,6 +51,7 @@ const DnDFlow = ({ docid }) => {
 
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>{error.message}</div>;
+  const store = useStore();
   const { transform } = useZoomPanHelper();
 
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
