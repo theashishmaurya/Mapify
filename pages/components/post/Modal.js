@@ -10,7 +10,7 @@ import "react-quill/dist/quill.snow.css"; // ES6
 const Modal = ({ setShowModal, postId }) => {
   // const [postData, setPostData] = useContext(PostContext);
   // console.log(postData, postId);
-
+  console.log(postId);
   const db = firebase.firestore();
   const [temp, setTemp] = useState({
     title: "",

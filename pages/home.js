@@ -61,7 +61,7 @@ export default function Dashboard() {
               return (
                 <div key={post.Postid}>
                   {/* <Card title={post.title} description={post.description} /> */}
-                  <div className='border  shadow-md rounded-xl p-8 md:p-0  hover:scale-105 mb-10 grid grid-cols-2 gap-4 w-full'>
+                  <div className='border  shadow-md rounded-xl p-8 md:p-0  hover:scale-105 mb-10 grid grid-cols-2 gap-4 w-full duration-100'>
                     <div className='pt-6 md:p-8 space-y-4 '>
                       <p className='text-lg font-bold  text-center'>
                         {post.title}

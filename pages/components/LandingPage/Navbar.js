@@ -5,7 +5,9 @@ const Navbar = () => {
     <div>
       <div className='navbar grid grid-cols-3 tracking-wide my-2'>
         <div className='logo flex justify-start'>
-          <h3 className='font-extrabold text-3xl'>Mapify</h3>
+          <h3 className='font-extrabold text-3xl'>
+            <Link href='/'>Mapify</Link>
+          </h3>
         </div>
         <div className='navs flex justify-center font-bold  p-2'>
           <div className='mx-2'>

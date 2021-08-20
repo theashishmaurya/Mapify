@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   Controls,
-  useZoomPanHelper,
   Handle,
   ControlButton,
 } from "react-flow-renderer";
@@ -39,7 +38,7 @@ const Embed = ({ docid }) => {
         .doc(docid)
         .get()
         .then((doc) => {
-          console.log(doc.data());
+          // console.log(doc.data());
           const flow = doc.data().flow;
           const [x = 0, y = 0] = flow.position;
           setElements(flow.elements || []);
@@ -47,6 +46,7 @@ const Embed = ({ docid }) => {
           // console.log(flow);
           rfInstance.fitView();
           reactFlowInstance.fitView();
+          console.log(doc.data());
         })
         .catch((err) => console.log(err));
     } else {
@@ -63,10 +63,7 @@ const Embed = ({ docid }) => {
   };
   const horizontalConnector = ({ data }) => {
     return (
-      <div
-      // style={{ padding: "10px 40px", fontSize: 10 }}
-      // className='border border-black px-10 rounded-md  '
-      >
+      <div>
         <Handle
           type='source'
           position='top'
@@ -103,7 +100,7 @@ const Embed = ({ docid }) => {
   const onSaveImage = () => {
     rfInstance.fitView();
     if (canvasRef.current === null) {
-      console.log("null");
+      // console.log("null");
       return;
     }
     toPng(canvasRef.current, { cacheBust: true })
@@ -122,7 +119,7 @@ const Embed = ({ docid }) => {
     <div className='grid' ref={canvasRef}>
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper bg-gray-100 min-h-screen min-w-min  border-black relative'
+          className='reactflow-wrapper bg-gray-100 min-h-screen min-w-full border-black'
           ref={reactFlowWrapper}
         >
           <ReactFlow

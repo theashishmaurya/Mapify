@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@auth0/nextjs-auth0";
 import "./roadmap.module.css";
 import EditNode from "./editNode";
+import Error from "../modals/errorModal";
+import Success from "../modals/successModal";
 const db = firebase.firestore();
 const initialElements = [
   {
@@ -133,9 +135,21 @@ const DnDFlow = ({ docid }) => {
         })
         .then(() => {
           console.log("Saved Data");
-          alert("Your data is saved");
+          setShowModal(true);
+          setMessage({ ...message, success: true });
+          setTimeout(() => {
+            setShowModal(false);
+            setMessage({ ...message, success: false });
+          }, 3000);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setShowModal(true);
+          setMessage({ ...message, error: true });
+          setTimeout(() => {
+            setShowModal(false);
+            setMessage({ ...message, error: false });
+          }, 3000);
+        });
     }
   };
 
@@ -213,18 +227,46 @@ const DnDFlow = ({ docid }) => {
       console.log("no pid");
     }
   }, [setElements, docid, rfInstance]);
-
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState({
+    success: false,
+    error: false,
+  });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   return (
-    <div className='grid grid-cols-4'>
+    <div className='grid grid-cols-4 gap-2'>
+      {/* <button
+        onClick={() => {
+          setShowModal(!showModal);
+          setMessage({ ...message, error: !error });
+        }}
+      >
+        Click me
+      </button> */}
+      {showModal && message.error && (
+        <Error
+          setShowModal={setShowModal}
+          error='Your data not saved'
+          showModal={showModal}
+        />
+      )}
+
+      {showModal && message.success && (
+        <Success
+          setShowModal={setShowModal}
+          success='Your data have been saved!'
+        />
+      )}
+
       <ReactFlowProvider>
         <div
-          className='reactflow-wrapper min-h-screen min-w-min col-span-3 border-2 border-black'
+          className='reactflow-wrapper min-w-auto col-span-3'
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            className='max-h-screen min-h-screen'
             nodeTypes={nodeTypes}
             elements={elements}
             onConnect={onConnect}

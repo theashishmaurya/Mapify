@@ -105,8 +105,8 @@ export default function Sidebar({ canvasRef, handleSave, setDownloading }) {
   };
   return (
     <div className=' min-h-full'>
-      <div className='mx-1'>
-        <div className='flex justify-start my-1'>
+      <div className=''>
+        <div className='flex justify-start '>
           <button
             onClick={() => router.push("/home")}
             className='rounded-full shadow-md p-2 mx-1 grid items-start'
@@ -187,7 +187,7 @@ export default function Sidebar({ canvasRef, handleSave, setDownloading }) {
           className='min-h-full w-8 h-8 rounded-full '
           // style={{ background: color.background }}
         >
-          <Image src={colorWheel} alt='color-wheel' />
+          <Image src={colorWheel} alt='color-wheel' draggable='false' />
         </button>
         {displayColorPicker ? (
           <div style={popover}>

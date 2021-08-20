@@ -2,12 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   Controls,
-  useZoomPanHelper,
   Handle,
   ControlButton,
 } from "react-flow-renderer";
 import { toPng } from "html-to-image";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 
 import firebase from "../../../firebase/clientApp";
 

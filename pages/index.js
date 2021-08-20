@@ -5,7 +5,7 @@ import homeImage from "../public/image/mainpage.png";
 import Link from "next/link";
 export default function Home() {
   return (
-    <div className='container mx-auto px-20 my-4 max-h-screen'>
+    <div className='container mx-auto px-20 mb-4 max-h-screen'>
       <Head>
         <title>Welcome</title>
         <link rel='icon' href='/favicon.ico' />
