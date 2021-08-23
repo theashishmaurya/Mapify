@@ -1,19 +1,17 @@
-import Navbar from './components/LandingPage/Navbar';
-import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 const About = () => {
   return (
-    <div className="px-20 mx-20">
-      <Head>
+    <div className="mx-20">
+      {/* <Head>
         <title>About</title>
         <meta />
-      </Head>
+      </Head> */}
 
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="mt-20">
-        <div className="font-medium text-6xl pr-40 leading-tight uppercase">
-          <span className="text-8xl font-normal">C</span>reate your Node-Based
+        <div className="font-medium text-5xl pr-20 leading-tight uppercase">
+          <span className="text-6xl font-medium">C</span>reate your Node-Based
           Contents in just Seconds with Mapify.
         </div>
         <div className="grid mt-40 grid-cols-2 gap-6">

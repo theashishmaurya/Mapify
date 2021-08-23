@@ -9,12 +9,11 @@ import Loader from './components/loader/loader';
 import Swal from 'sweetalert2';
 
 const Card = (props) => {
-  const { id, path, title, setShowModal, setPostId } = props;
+  const { id, path, title, setShowModal, setPostId, handleDelete } = props;
   const [show, setShow] = useState(false);
   let domain = window.location.hostname;
   if (domain === 'localhost') {
     domain = window.location.hostname + ':' + window.location.port;
-    console.log(domain);
   }
   return (
     <div className="w-full h-30  m-6 grid grid-cols-2 shadow-md  py-4 rounded-md mx-4 hover:scale-105 duration-100	">
@@ -46,7 +45,7 @@ const Card = (props) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7 mt-2 flex items-center"
+              className="h-7 w-7 mt-2 flex items-center z-2"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -54,7 +53,7 @@ const Card = (props) => {
             </svg>
           </div>
           {show && (
-            <div className="absolute min-w-20 shadow-md bg-white z-2 my-2 rounded-md">
+            <div className="absolute min-w-20 shadow-md bg-white my-2 z-3 opacity-100 rounded-md bg-white">
               <button
                 className="flex p-4 font-medium block hover:text-white hover:bg-black w-full"
                 onClick={() => {
@@ -87,6 +86,15 @@ const Card = (props) => {
               >
                 Share
               </button>
+              <button
+                className="flex p-4 font-medium block w-full text-white bg-red-600"
+                onClick={() => {
+                  handleDelete(id);
+                  setShow(!show);
+                }}
+              >
+                Delete
+              </button>
             </div>
           )}
         </div>
@@ -100,6 +108,7 @@ Card.propTypes = {
   title: PropTypes.any,
   setShowModal: PropTypes.any,
   setPostId: PropTypes.any,
+  handleDelete: PropTypes.any,
 };
 
 export default function Profile() {
@@ -128,6 +137,35 @@ export default function Profile() {
       setPosts([]);
     };
   }, [isLoading]);
+
+  const handleDelete = async (id) => {
+    await db
+      .collection('roadmap')
+      .doc(id)
+      .delete()
+      .then(async () => {
+        setPosts([]);
+        await db
+          .collection('roadmap')
+          .where('user', '==', user.sub)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              setPosts((post) => [
+                ...post,
+                { id: doc.id, title: doc.data().title },
+              ]);
+            });
+          })
+          .catch((err) => console.log(err));
+        Swal.fire({
+          title: 'Roadmap Deleted Successfully!',
+          icon: 'success',
+          confirmButtonText: 'ok',
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   if (isLoading)
     return (
@@ -191,6 +229,7 @@ export default function Profile() {
                     title={data.title}
                     setShowModal={setShowModal}
                     setPostId={setPostId}
+                    handleDelete={handleDelete}
                   />
                 </div>
               );

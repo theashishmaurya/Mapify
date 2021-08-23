@@ -4,6 +4,7 @@ import Image from 'next/image';
 import homeImage from '../public/image/mainpage.png';
 import Link from 'next/link';
 import React from 'react';
+import About from './components/LandingPage/about';
 
 export default function Home() {
   return (
@@ -22,8 +23,8 @@ export default function Home() {
             <Navbar />
           </div>
         </header>
-        <main className="container mx-auto my-4 xl:my-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <main className="container mx-auto my-4 xl:my-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
             <div className="">
               <div className="font-bold text-6xl m-2 my-10 leading-tight">
                 <section>
@@ -50,11 +51,27 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="">
+            <div className="flex justify-center items-center">
               <Image src={homeImage} alt="Illustration of Home pic" />
             </div>
           </div>
         </main>
+        <div className="flex justify-center ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-10 w-10 animate-bounce	"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M15.707 4.293a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 0zm0 6a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+
+        <About />
 
         <footer className="flex items-center justify-center w-full h-24 border-t">
           <a
