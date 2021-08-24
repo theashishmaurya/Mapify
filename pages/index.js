@@ -3,13 +3,25 @@ import Navbar from './components/LandingPage/Navbar';
 import Image from 'next/image';
 import homeImage from '../public/image/mainpage.png';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import About from './components/LandingPage/about';
+import Swal from 'sweetalert2';
 
 export default function Home() {
+  useEffect(() => {
+    if (window.matchMedia('(max-width:1024px)').matches) {
+      Swal.fire({
+        title: 'Mapify is most Optimal for Desktop deviecs',
+        titleText:
+          'Seems like your are using device with >1024 widht,Mapify is most Optimal for Desktop deviecs',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+    }
+  });
   return (
     <div>
-      <div className="container mx-auto px-20 mb-4 max-h-screen">
+      <div className="container mx-auto md:px-20 px-6 md:mb-4 max-h-screen">
         <Head>
           <title>Welcome</title>
           <link rel="icon" href="/favicon.ico" />
@@ -23,10 +35,10 @@ export default function Home() {
             <Navbar />
           </div>
         </header>
-        <main className="container mx-auto my-4 xl:my-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+        <main className="container mx-auto xl:my-4 items-center ">
+          <div className="grid grid-rows-2  lg:grid-rows-1 lg:grid-cols-2 md:gap-4 ">
             <div className="">
-              <div className="font-bold text-6xl m-2 my-10 leading-tight">
+              <div className="font-bold text-4xl lg:text-6xl md:mt-10 mb-10 leading-tight ">
                 <section>
                   Create Roadmaps or flowcharts Easily with Mapify.
                 </section>
@@ -45,13 +57,13 @@ export default function Home() {
                   </button>
                 </Link>
                 <Link href="/api/auth/login">
-                  <button className="border-2 border-black p-4 font-bold rounded-md ml-2">
-                    Watch video
+                  <button className="border-2 border-black p-4 font-bold rounded-md ">
+                    <div className="flex items-center">Watch video</div>
                   </button>
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center row-start-1 row-end-2 lg:col-start-2">
               <Image src={homeImage} alt="Illustration of Home pic" />
             </div>
           </div>
@@ -84,7 +96,7 @@ export default function Home() {
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
-              className="h-4 ml-2"
+              className="h-4 ml-2 "
               width={60}
               height={60}
             />

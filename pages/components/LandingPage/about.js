@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 const About = () => {
   return (
-    <div className="mx-20">
+    <div className="lg:mx-20 mx-4">
       {/* <Head>
         <title>About</title>
         <meta />
@@ -10,11 +10,11 @@ const About = () => {
 
       {/* <Navbar /> */}
       <div className="mt-20">
-        <div className="font-medium text-5xl pr-20 leading-tight uppercase">
-          <span className="text-6xl font-medium">C</span>reate your Node-Based
-          Contents in just Seconds with Mapify.
+        <div className="font-medium lg:text-5xl text-2xl md:text-4xl lg:pr-20 md:pr-4 leading-tight uppercase">
+          <span className="lg:text-6xl font-medium">C</span>reate your
+          Node-Based Contents in just Seconds with Mapify.
         </div>
-        <div className="grid mt-40 grid-cols-2 gap-6">
+        <div className="grid mt-40 lg:grid-cols-2 gap-6">
           <div className="flex justify-center items-center mx-2">
             <video
               autoPlay
@@ -23,7 +23,7 @@ const About = () => {
               src="https://res.cloudinary.com/theashishmaurya/video/upload/v1629708809/share_x6gxly.mp4"
             />
           </div>
-          <div className=" flex  pl-10 justify-end text-3xl items-center">
+          <div className=" flex  md:pl-10 justify-end md:text-3xl  items-center">
             <p>
               <span className="font-bold">Create</span>,{' '}
               <span className="font-bold">Embed</span> or{' '}
@@ -44,8 +44,8 @@ const About = () => {
             </svg>
           </div>
         </div>
-        <div className="grid mt-40 grid-cols-2 gap-6">
-          <div className=" flex justify-end pr-20 text-3xl items-center">
+        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 md:gap-6 gap-4">
+          <div className=" flex justify-end md:pr-20 md:text-3xl items-center row-start-2 lg:row-start-1">
             <p>
               <span className="font-bold">Desing</span> your nodes with
               <span className="font-bold"> Tailwind</span> css Classes.
@@ -63,7 +63,7 @@ const About = () => {
             </div>
           </div>
         </div>
-        <div className="grid mt-40 grid-cols-2 gap-6">
+        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 gap-6">
           <div>
             <div className="flex justify-center items-center mx-2">
               <video
@@ -74,7 +74,7 @@ const About = () => {
               />
             </div>
           </div>
-          <div className=" flex justify-end pr-20 text-3xl items-center">
+          <div className=" flex justify-end md:pr-20 md:text-3xl items-center ">
             <p>
               Generate
               <span className="font-bold"> Embeddable </span>
@@ -83,8 +83,8 @@ const About = () => {
             </p>
           </div>
         </div>
-        <div className="grid mt-40 grid-cols-2 gap-6">
-          <div className=" flex justify-end pr-20 text-3xl items-center">
+        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 gap-6">
+          <div className=" flex justify-end md:pr-20 md:text-3xl items-center row-start-2 lg:row-start-1">
             <p>
               <span className="font-bold">Post</span> your roadmaps to public to
               stand a chance to get featured in{' '}
@@ -104,15 +104,15 @@ const About = () => {
         </div>
         <div>
           <div className="flex justify-center my-40 items-center">
-            <div className="flex text-4xl font-bold mx-10">
+            <div className="flex md:text-4xl text-xl md font-bold lg:mx-10 mx-2">
               What are you waiting for?{' '}
             </div>
             <Link href="/api/auth/login">
-              <button className="border-2 border-black p-4 font-bold  mx-8 flex items-center text-2xl rounded-md ml-2 hover:text-white hover:bg-black">
+              <button className="border-2 border-black lg:p-4 font-bold text-sm lg:mx-8 flex py-2 px-1 items-center lg:text-2xl rounded-md ml-2 hover:text-white hover:bg-black">
                 Sign Up{' '}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-9 w-8 flex items-center mx-2"
+                  className="h-9 w-8 flex items-center mx-2 hidden md:flex"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
