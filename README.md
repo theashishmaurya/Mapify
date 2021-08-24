@@ -12,8 +12,8 @@ Roadmaps and flows makes understanding easy but the whole problem with them is t
 
 - Fully drag and add option to simple create new Node.
 - Style your Nodes with tailwind CSS or predefined styles.
-- Download the node in PNG format directly to your local
-- Find other people's post about new Roadmaps or flow-apps
+- Download the node in PNG format directly to your local.
+- Find other people's post about new Roadmaps or flow-charts.
 - Create your Embeddable link and embed them to your new blog post or your own site.
 
 ### Previews
