@@ -8,7 +8,7 @@ import { useState } from "react";
 const Card = ({ img }) => {
   return (
     <div className='flex justify-center items-center  rounded-md  p-4  shadow-md cursor-pointer'>
-      <Image src={img} width={80} height={80} />
+      <Image src={img} width={80} height={80} draggable='false' />
     </div>
   );
 };

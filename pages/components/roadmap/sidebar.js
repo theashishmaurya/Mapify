@@ -1,21 +1,20 @@
-import React, { useContext, useState } from "react";
-import { toPng } from "html-to-image";
-import { RoadmapContext } from "../../api/roadmap/roadmapContext";
-import { TwitterPicker } from "react-color";
-import Edges from "./edges";
-import Image from "next/image";
-import colorWheel from "../../../public/image/color.png";
-import router from "next/router";
+import React, { useContext, useState } from 'react';
+import { RoadmapContext } from '../../api/roadmap/roadmapContext';
+import { TwitterPicker } from 'react-color';
+import Edges from './edges';
+import Image from 'next/image';
+import colorWheel from '../../../public/image/color.png';
+import router from 'next/router';
 
-export default function Sidebar({ canvasRef, handleSave }) {
+export default function Sidebar({ handleSave, onSaveImage }) {
   const onDragStart = (event, nodeData) => {
-    event.dataTransfer.setData("application/reactflow", nodeData);
-    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData('application/reactflow', nodeData);
+    event.dataTransfer.effectAllowed = 'move';
   };
 
   const [roadmapData, setRoadmapData] = useContext(RoadmapContext);
   // console.log(roadmapData, "from sidebar");
-  const [detail, setDetail] = useState("Drag me");
+  const [detail, setDetail] = useState('Drag me');
   const handleOnChange = (e) => {
     e.preventDefault();
     setDetail(e.target.value);
@@ -27,7 +26,7 @@ export default function Sidebar({ canvasRef, handleSave }) {
       title: roadmapData.title,
     });
   };
-  const [docName, setDocName] = useState("untitled");
+  const [docName, setDocName] = useState('untitled');
 
   const handleDocChange = (e) => {
     setDocName(e.target.value);
@@ -39,29 +38,33 @@ export default function Sidebar({ canvasRef, handleSave }) {
       data: roadmapData.data,
       background: color.background,
       edgeType: roadmapData.edgeType,
-      title: docName !== undefined ? docName : "untitled",
+      title: docName !== undefined ? docName : 'untitled',
     });
   };
-  const onSaveImage = () => {
-    if (canvasRef.current === null) {
-      console.log("null");
-      return;
-    }
-    toPng(canvasRef.current, { cacheBust: true })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = "my-Roadmap.png";
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  ////////////////////Color picker functions /////////////////////////////
+
+  // const onSaveImage = () => {
+  //   if (canvasRef.current === null) {
+  //     console.log("null");
+  //     return;
+  //   }
+  //   setDownloading(true);
+
+  //   toPng(canvasRef.current, { cacheBust: true })
+  //     .then((dataUrl) => {
+  //       const link = document.createElement("a");
+  //       link.download = "my-Roadmap.png";
+  //       link.href = dataUrl;
+  //       link.click();
+  //       setDownloading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  //////////////////// Color picker functions /////////////////////////////
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [color, setColor] = useState({
-    background: "#fff",
+    background: '#fff',
   });
   const handleColorChange = (col) => {
     setColor({ background: col.hex });
@@ -89,65 +92,65 @@ export default function Sidebar({ canvasRef, handleSave }) {
     setRoadmapData(newData);
   };
   const popover = {
-    position: "absolute",
-    zIndex: "2",
+    position: 'absolute',
+    zIndex: '2',
   };
   const cover = {
-    position: "fixed",
-    top: "0px",
-    right: "0px",
-    bottom: "0px",
-    left: "0px",
+    position: 'fixed',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    left: '0px',
   };
   return (
-    <div className=' min-h-full'>
-      <div className='mx-1'>
-        <div className='flex justify-start my-1'>
+    <div className=" min-h-full">
+      <div className="">
+        <div className="flex justify-start ">
           <button
-            onClick={() => router.push("/home")}
-            className='rounded-full shadow-md p-2 mx-1 grid items-start'
+            onClick={() => router.push('/home')}
+            className="rounded-full shadow-md p-2 mx-1 grid items-start"
           >
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-6 w-6'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth={2}
-                d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
           </button>
 
-          <div className='font-medium mx-2 flex items-center'>
-            {" "}
-            Roadmap /{" "}
+          <div className="font-medium mx-2 flex items-center">
+            {' '}
+            Roadmap /{' '}
             <span>
-              <form onSubmit={handleOnDocSubmit} className='inline-block'>
+              <form onSubmit={handleOnDocSubmit} className="inline-block">
                 <input
-                  type='text'
-                  placeholder='untitled'
-                  className='border-b-2 focus:outline-none inline-block'
+                  type="text"
+                  placeholder="untitled"
+                  className="border-b-2 focus:outline-none inline-block"
                   onChange={handleDocChange}
                 />
               </form>
             </span>
           </div>
         </div>
-        <div className='description font-bold text-xl mb-2 pt-2'>
+        <div className="description font-bold text-xl mb-2 pt-2">
           You can drag the nodes to the pane on the right.
         </div>
-        <div className='bg-gray-100 cursor-move py-4 flex justify-center rounded-md'>
+        <div className="bg-gray-100 cursor-move py-4 flex justify-center rounded-md">
           <div
-            className=' p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md shadow-md'
+            className=" p-4 my-4 w-36 text-md  flex aling-center justify-center font-medium rounded-md shadow-md"
             style={{ background: color.background }}
             onDragStart={(event) => {
-              onDragStart(event, "target");
-              setDetail("new data");
+              onDragStart(event, 'target');
+              setDetail('new data');
             }}
             draggable
           >
@@ -155,17 +158,17 @@ export default function Sidebar({ canvasRef, handleSave }) {
           </div>
         </div>
 
-        <div className='input'>
-          <div className='my-2'>
-            <label htmlFor='input' className='font-medium '>
+        <div className="input">
+          <div className="my-2">
+            <label htmlFor="input" className="font-medium ">
               Add description
             </label>
           </div>
           <input
-            className='border-2 border-gray-400 rounded-lg  w-full p-2 '
-            type='text'
-            name='node'
-            placeholder='Type something'
+            className="border-2 border-gray-400 rounded-lg  w-full p-2 "
+            type="text"
+            name="node"
+            placeholder="Type something"
             value={detail}
             onChange={handleOnChange}
           />
@@ -177,13 +180,13 @@ export default function Sidebar({ canvasRef, handleSave }) {
       >
         <CompactPicker color={color} onChangeComplete={handleColorChange} />
       </div> */}
-      <div className='m-2'>
+      <div className="m-2">
         <button
           onClick={handleClick}
-          className='min-h-full w-8 h-8 rounded-full '
+          className="min-h-full w-8 h-8 rounded-full "
           // style={{ background: color.background }}
         >
-          <Image src={colorWheel} alt='color-wheel' />
+          <Image src={colorWheel} alt="color-wheel" draggable="false" />
         </button>
         {displayColorPicker ? (
           <div style={popover}>
@@ -198,24 +201,24 @@ export default function Sidebar({ canvasRef, handleSave }) {
       </div>
 
       <footer>
-        <div className='mx-2 my-2'>
-          <h1 className='font-bold'>Guide </h1>
-          <div className='text-sm text-gray-600 '>
-            <div className=' flex'>
+        <div className="mx-2 my-2">
+          <h1 className="font-bold">Guide </h1>
+          <div className="text-sm text-gray-600 ">
+            <div className=" flex">
               Click
-              <span className='inline-block'>
+              <span className="inline-block">
                 <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-6 w-6'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
                   <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={2}
-                    d='M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122'
+                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
                   />
                 </svg>
               </span>
@@ -223,60 +226,60 @@ export default function Sidebar({ canvasRef, handleSave }) {
             </div>
             <div>
               <div>
-                {" "}
+                {' '}
                 <span>
-                  Backspace{" "}
+                  Backspace{' '}
                   <span>
                     <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6 inline-block'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 inline-block"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
                       <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         strokeWidth={2}
-                        d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
                       />
                     </svg>
                   </span>
-                </span>{" "}
+                </span>{' '}
                 to delete selected node / edge
               </div>
               <div>
                 <span>
-                  Shift{" "}
+                  Shift{' '}
                   <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-6 w-6 inline-block'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 inline-block"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       strokeWidth={2}
-                      d='M8 7l4-4m0 0l4 4m-4-4v18'
+                      d="M8 7l4-4m0 0l4 4m-4-4v18"
                     />
-                  </svg>{" "}
+                  </svg>{' '}
                 </span>
                 + Mouse drag select to select mutiple nodes
               </div>
             </div>
           </div>
         </div>
-        <div className='flex my-4'>
+        <div className="flex my-4">
           <button
-            className='px-4 py-2 mx-2 rounded-md text-white font-medium bg-blue-600 flex justify-end'
+            className="px-4 py-2 mx-2 rounded-md text-white font-medium bg-blue-600 flex justify-end"
             onClick={handleSave}
           >
             Save
           </button>
           <button
-            className='px-4 py-2 rounded-md text-white font-medium bg-green-600 flex justify-end'
+            className="px-4 py-2 rounded-md text-white font-medium bg-green-600 flex justify-end"
             onClick={onSaveImage}
           >
             Download
