@@ -56,11 +56,32 @@ export default function Home() {
                     Start Creating
                   </button>
                 </Link>
-                <Link href="/api/auth/login">
-                  <button className="border-2 border-black p-4 font-bold rounded-md ">
-                    <div className="flex items-center">Watch video</div>
-                  </button>
-                </Link>
+                {/* <div className="overflow-hidden relative h-0 pb-10">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/mmCfYMzsnH4"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    className="left-0 top-0 h-full w-full absolute"
+                  ></iframe>
+                </div> */}
+                <button
+                  className="border-2 border-black p-4 font-bold rounded-md "
+                  onClick={() => {
+                    Swal.fire({
+                      html: ' <iframe width="100%" height="450" src="https://www.youtube.com/embed/mmCfYMzsnH4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+                      padding: 8,
+                      width: '100%',
+                      showConfirmButton: false,
+                      background: '#000',
+                    });
+                  }}
+                >
+                  <div className="flex items-center">Watch video</div>
+                </button>
               </div>
             </div>
             <div className="flex justify-center items-center row-start-1 row-end-2 lg:col-start-2">

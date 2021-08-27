@@ -13,11 +13,12 @@ const Navbar = () => {
           <div className="mx-2">
             <Link href="/roadmaps">Roadmap</Link>
           </div>
-          <div className="mx-2">
-            <Link href="/resources">Resources+</Link>
-          </div>
+
           <div className="mx-2">
             <Link href="/guide">Guide</Link>
+          </div>
+          <div className="mx-2">
+            <Link href="https://discord.gg/Ga3kp745r5">Discord</Link>
           </div>
         </div>
         <div className="flex justify-end font-bold px-2 flex content-end col-start-3  ">
