@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
-import Image from "next/image";
-import smoothstep from "../../../public/image/smoothstep.png";
-import bezier from "../../../public/image/default.png";
-import straight from "../../../public/image/line.png";
-import { RoadmapContext } from "../../api/roadmap/roadmapContext";
-import { useState } from "react";
+import React, { useContext } from 'react';
+import Image from 'next/image';
+import smoothstep from '../../public/image/smoothstep.png';
+import bezier from '../../public/image/default.png';
+import straight from '../../public/image/line.png';
+import { RoadmapContext } from '../../pages/api/roadmap/roadmapContext';
+import { useState } from 'react';
 const Card = ({ img }) => {
   return (
-    <div className='flex justify-center items-center  rounded-md  p-4  shadow-md cursor-pointer'>
-      <Image src={img} width={80} height={80} draggable='false' />
+    <div className="flex justify-center items-center  rounded-md  p-4  shadow-md cursor-pointer">
+      <Image src={img} width={80} height={80} draggable="false" />
     </div>
   );
 };
 
 const styles = {
-  borderColor: "#0099ff",
-  borderStyle: "solid",
-  borderWidth: "2px",
+  borderColor: '#0099ff',
+  borderStyle: 'solid',
+  borderWidth: '2px',
 };
 
 const Edges = () => {
@@ -44,29 +44,29 @@ const Edges = () => {
     straight: null,
   });
   return (
-    <div className='edges flex justify-arround'>
+    <div className="edges flex justify-arround">
       <div
-        className='rounded-md m-2'
+        className="rounded-md m-2"
         onClick={() => {
-          handleOnClick("smoothstep");
+          handleOnClick('smoothstep');
         }}
         style={style.smoothstep}
       >
         <Card img={smoothstep} />
       </div>
       <div
-        className='rounded-md m-2'
+        className="rounded-md m-2"
         onClick={() => {
-          handleOnClick("default");
+          handleOnClick('default');
         }}
         style={style.default}
       >
         <Card img={bezier} />
       </div>
       <div
-        className='rounded-md m-2'
+        className="rounded-md m-2"
         onClick={() => {
-          handleOnClick("straight");
+          handleOnClick('straight');
         }}
         style={style.straight}
       >

@@ -12,10 +12,10 @@ import ReactFlow, {
 import { toPng } from 'html-to-image';
 
 import Sidebar from './sidebar';
-import { RoadmapContext } from '../../api/roadmap/roadmapContext';
-import firebase from '../../../firebase/clientApp';
+import { RoadmapContext } from '../../pages/api/roadmap/roadmapContext';
+import firebase from '../../firebase/clientApp';
 import { v4 as uuidv4 } from 'uuid';
-import { useUser } from '@auth0/nextjs-auth0';
+// import { useUser } from '@auth0/nextjs-auth0';
 import './roadmap.module.css';
 import EditNode from './editNode';
 import Error from '../modals/errorModal';
@@ -49,7 +49,7 @@ const DnDFlow = ({ docid }) => {
   //   return null;
   // }
   // console.log(value);
-  const { user, error, isLoading } = useUser();
+  // const { user, error, isLoading } = useUser();
   // const { transform } = useZoomPanHelper();
 
   // if (isLoading) return <div>Loading...</div>;
@@ -255,8 +255,8 @@ const DnDFlow = ({ docid }) => {
         console.log(err);
       });
   };
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>{error.message}</div>;
 
   return (
     <div className="grid grid-cols-4 gap-2">

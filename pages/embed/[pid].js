@@ -1,7 +1,6 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useRouter } from "next/router";
-import { ReactFlowProvider } from "react-flow-renderer";
-import Embed from "../components/roadmap/embed";
+import { useRouter } from 'next/router';
+import { ReactFlowProvider } from 'react-flow-renderer';
+import Embed from '../components/roadmap/embed';
 
 const Embedable = () => {
   const router = useRouter();

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './components/LandingPage/Navbar';
+import Navbar from '../components/LandingPage/Navbar';
 import Head from 'next/head';
-import dummy from '../public/image/mainpage.png';
 import firebase from '../firebase/clientApp';
 import Link from 'next/link';
-import Image from 'next/image';
-import Embed from './components/roadmap/embed';
+import Embed from '../components/roadmap/embed';
 const Card = ({ title, description, Postid, votes, author, roadmapId }) => {
   return (
     <div className="border shadow-md rounded-xl hover:scale-105 mb-10 w-full duration-100 p">

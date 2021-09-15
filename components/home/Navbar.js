@@ -1,12 +1,7 @@
-import { useUser } from '@auth0/nextjs-auth0';
 import Link from 'next/link';
 import uuidstring from '../roadmap/api/uuidstring';
 
 const Navbar = (props) => {
-  const { user, error, isLoading } = useUser();
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-  // const createRoute = `/create/${user.sub}`;
   const createRoute = uuidstring();
 
   return (
@@ -31,7 +26,7 @@ const Navbar = (props) => {
         <div className="flex justify-end font-medium px-2 flex content-end">
           <Link href="/profile">
             <div className="flex items-center justify-center cursor-pointer	 px-2 py-1">
-              <span className="mx-1"> {user.nickname}</span>
+              <span className="mx-1"> UserName</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

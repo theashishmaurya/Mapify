@@ -1,11 +1,10 @@
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import firebase from '../firebase/clientApp';
-import Modal from './components/post/Modal';
+import Modal from '../components/post/Modal';
 import router from 'next/router';
 import PropTypes from 'prop-types';
-import Loader from './components/loader/loader';
+import Loader from '../components/loader/loader';
 import Swal from 'sweetalert2';
 
 const Card = (props) => {
@@ -112,31 +111,30 @@ Card.propTypes = {
 };
 
 export default function Profile() {
-  const { user, error, isLoading } = useUser();
+  // const { user, error, isLoading } = useUser();
   const db = firebase.firestore();
   const [showModal, setShowModal] = useState(false);
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
   useEffect(async () => {
-    if (!isLoading) {
-      await db
-        .collection('roadmap')
-        .where('user', '==', user.sub)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            setPosts((post) => [
-              ...post,
-              { id: doc.id, title: doc.data().title },
-            ]);
-          });
-        })
-        .catch((err) => console.log(err));
-    }
+    await db
+      .collection('roadmap')
+      .where('user', '==', user.sub)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setPosts((post) => [
+            ...post,
+            { id: doc.id, title: doc.data().title },
+          ]);
+        });
+      })
+      .catch((err) => console.log(err));
+
     return () => {
       setPosts([]);
     };
-  }, [isLoading]);
+  }, []);
 
   const handleDelete = async (id) => {
     await db
@@ -247,4 +245,3 @@ export default function Profile() {
     )
   );
 }
-export const getServerSideProps = withPageAuthRequired();

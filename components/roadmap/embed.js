@@ -7,7 +7,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 import { toPng } from 'html-to-image';
 
-import firebase from '../../../firebase/clientApp';
+import firebase from '../../firebase/clientApp';
 
 const db = firebase.firestore();
 const initialElements = [

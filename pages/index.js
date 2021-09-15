@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import Navbar from './components/LandingPage/Navbar';
+import Navbar from '../components/LandingPage/Navbar';
 import Image from 'next/image';
 import homeImage from '../public/image/mainpage.png';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import About from './components/LandingPage/about';
+import About from '../components/LandingPage/about';
 import Swal from 'sweetalert2';
 
 export default function Home() {

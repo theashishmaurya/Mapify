@@ -1,6 +1,5 @@
-import { useUser } from '@auth0/nextjs-auth0';
 import React, { useState } from 'react';
-import firebase from '../../../firebase/clientApp';
+import firebase from '../../firebase/clientApp';
 import { v4 as uuidv4 } from 'uuid';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css'; // ES6
@@ -16,7 +15,7 @@ const Modal = ({ setShowModal, postId }) => {
     title: '',
     description: '',
   });
-  const { user, isLoading, error } = useUser();
+  // const { user, isLoading, error } = useUser();
   console.log(postId);
 
   const handleChange = (name) => (e) => {

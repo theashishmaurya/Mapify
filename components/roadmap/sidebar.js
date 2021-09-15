@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { RoadmapContext } from '../../api/roadmap/roadmapContext';
+import { RoadmapContext } from '../../pages/api/roadmap/roadmapContext';
 import { TwitterPicker } from 'react-color';
 import Edges from './edges';
 import Image from 'next/image';
-import colorWheel from '../../../public/image/color.png';
+import colorWheel from '../../public/image/color.png';
 import router from 'next/router';
 
 export default function Sidebar({ handleSave, onSaveImage }) {
@@ -289,12 +289,3 @@ export default function Sidebar({ handleSave, onSaveImage }) {
     </div>
   );
 }
-
-/* <div className='grid grid-cols-4 gap-4'>
-      <div className='bg-gray-200 min-h-screen min-w-min col-span-3 border-2 border-black'>
-        <ReactFlow elements={initialElements} onLoad={onLoad}>
-          <Controls />
-        </ReactFlow>
-      </div>
-      <div>This is new div</div>
-    </div> */

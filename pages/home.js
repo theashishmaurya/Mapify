@@ -1,16 +1,13 @@
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import React, { useEffect, useState } from 'react';
-import Navbar from './components/home/Navbar';
+import Navbar from '../components/home/Navbar';
 import banner from '../public/image/banner.png';
 import Image from 'next/image';
 import firebase from '../firebase/clientApp';
 import Link from 'next/link';
 import dummy from '../public/image/mainpage.png';
 import Head from 'next/head';
-import Loader from './components/loader/loader';
 
 export default function Dashboard() {
-  const { user, error, isLoading } = useUser();
   const [posts, setPosts] = useState([]);
   const db = firebase.firestore();
   const [isPostLoading, setIsPostloading] = useState(true);
@@ -29,16 +26,15 @@ export default function Dashboard() {
         console.log(err);
       });
   }, []);
-  if (isLoading) {
-    return <Loader />;
-  }
+
   return (
     <div>
       <Head>
         <title>Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Navbar user={user} error={error} isLoading={isLoading} />
+      {/* <Navbar user={user} error={error} isLoading={isLoading} /> */}
+      <Navbar />
       <div>
         {/*  */}
         <div className="grid grid-cols-2 gap-2 m-8">
@@ -112,5 +108,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-export const getServerSideProps = withPageAuthRequired();
