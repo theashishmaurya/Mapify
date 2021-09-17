@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import firebase from '../../firebase/clientApp';
+import { GithubAuthProvider } from 'firebase/auth';
+
 const SignUp = () => {
   const [data, setData] = useState({
     firstName: '',
@@ -10,32 +12,84 @@ const SignUp = () => {
   });
 
   const { firstName, lastName, email, password, confirmPassword } = data;
-  const provider = new firebase.auth.GithubAuthProvider();
 
-  useEffect(() => {
+  const GithubSingUp = (e) => {
+    e.preventDefault();
+    console.log('working');
+    const provider = new firebase.auth.GithubAuthProvider();
     firebase
       .auth()
-      .getRedirectResult()
+      .signInWithPopup(provider)
       .then((result) => {
-        if (result.credential) {
-          var credential = result.credential;
-          console.log(credential);
-          var token = credential.accessToken;
-          console.log(token);
-        }
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
 
+        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+        var token = credential.accessToken;
+
+        // The signed-in user info.
         var user = result.user;
         console.log(user);
+        // ...
       })
       .catch((error) => {
+        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         // The email of the user's account used.
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
+        // ...
       });
-  });
+  };
+  const GoogleSignUp = (e) => {
+    e.preventDefault();
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
+
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  };
+  const EmailLinkSingUp = () => {
+    var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be in the authorized domains list in the Firebase Console.
+      url: 'http://loaclhost:3000/home',
+      // This must be true.
+      handleCodeInApp: true,
+      iOS: {
+        bundleId: 'com.localhost.ios',
+      },
+      android: {
+        packageName: 'com.localhost.android',
+        installApp: true,
+        minimumVersion: '12',
+      },
+      dynamicLinkDomain: 'example.page.link',
+    };
+  };
 
   const handleOnChange = (name) => (e) => {
     setData({ ...data, [name]: e.target.value });
@@ -90,18 +144,19 @@ const SignUp = () => {
             <div className="flex-col flex xl:flex-row ">
               <button
                 className="w-full m-2 p-2 flex justify-center items-center bg-black text-white border-2 border-black shadow-md rounded-xl text-sm xl:text-md"
-                onClick={() => {
-                  firebase.auth().signInWithRedirect(provider);
-                }}
+                onClick={GithubSingUp}
               >
-                <span className="iconify" data-icon="octicon:mark-github-16">
-                  {' '}
-                </span>
+                <div
+                  className="iconify"
+                  data-icon="octicon:mark-github-16"
+                ></div>
                 <div className="mx-2">Sign Up with Github</div>
               </button>
-              <button className="w-full m-2 flex justify-center items-center p-2 bg-white border-2 shadow-md rounded-xl text-sm xl:text-md">
+              <button
+                className="w-full m-2 flex justify-center items-center p-2 bg-white border-2 shadow-md rounded-xl text-sm xl:text-md"
+                onClick={GoogleSignUp}
+              >
                 <span>
-                  {' '}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
